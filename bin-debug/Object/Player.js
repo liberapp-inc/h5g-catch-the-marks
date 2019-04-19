@@ -10,8 +10,8 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var Player = (function (_super) {
     __extends(Player, _super);
-    function Player(x, y, width, height, color) {
-        var _this = _super.call(this, x, y, width, height) || this;
+    function Player() {
+        var _this = _super.call(this) || this;
         Player.I = _this;
         _this.loadStatus();
         return _this;
@@ -23,6 +23,6 @@ var Player = (function (_super) {
     Player.prototype.updateContent = function () { };
     Player.I = null;
     return Player;
-}(GameCompornent));
+}(GameObject));
 __reflect(Player.prototype, "Player");
 //# sourceMappingURL=Player.js.map

@@ -89,6 +89,24 @@ var Util = (function () {
         var value = parseInt(stringValue);
         return value;
     };
+    Util.setRect = function (x, y, width, height, color, round) {
+        var shape = new egret.Shape();
+        shape.x = x;
+        shape.y = y;
+        shape.graphics.beginFill(color);
+        shape.graphics.drawRoundRect(0, 0, width, height, round);
+        shape.graphics.endFill();
+        return shape;
+    };
+    Util.setCircle = function (x, y, width, height, color, radius) {
+        var shape = new egret.Shape();
+        shape.x = x;
+        shape.y = y;
+        shape.graphics.beginFill(color);
+        shape.graphics.drawCircle(0, 0, radius);
+        shape.graphics.endFill();
+        return shape;
+    };
     return Util;
 }());
 __reflect(Util.prototype, "Util");

@@ -12,7 +12,6 @@ abstract class Button extends UICompornent{
         this.setCompornentStatus(x, y, width, height);
     }
 
-    //Button用にオーバーライド
     setCompornentStatus(x : number, y : number, width : number, height : number){
         this.compornent.anchorOffsetX += width/2;
         this.compornent.anchorOffsetY += height/2;

@@ -107,14 +107,14 @@ abstract class GameCompornent extends GameObject{
     }
 
     setCompornent(x : number, y : number, width : number, height : number){
-        if(width <= 0){
+/*        if(width <= 0){
+            console.log("widthが0以下です :" + width);
             width = 1;
-            console.log("widthが0以下です");
         }
         if(height <= 0){
+            console.log("heightが0以下です :" + height);
             height = 1;
-            console.log("heightが0以下です");
-        }
+        }*/
         this.compornent = new egret.DisplayObjectContainer();
         this.compornent.width = width;
         this.compornent.height = height;
@@ -138,14 +138,14 @@ abstract class UICompornent extends GameObject{
     }
 
     setCompornent(x : number, y : number, width : number, height : number){
-        if(width <= 0){
+/*        if(width <= 0){
             width = 1;
             console.log("widthが0以下です");
         }
         if(height <= 0){
             height = 1;
             console.log("heightが0以下です");
-        }
+        }*/
         this.compornent = new egret.DisplayObjectContainer();
         this.compornent.width = width;
         this.compornent.height = height;

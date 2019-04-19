@@ -21,7 +21,6 @@ var Button = (function (_super) {
         _this.setCompornentStatus(x, y, width, height);
         return _this;
     }
-    //Button用にオーバーライド
     Button.prototype.setCompornentStatus = function (x, y, width, height) {
         this.compornent.anchorOffsetX += width / 2;
         this.compornent.anchorOffsetY += height / 2;

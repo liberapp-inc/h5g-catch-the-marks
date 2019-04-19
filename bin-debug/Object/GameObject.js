@@ -97,14 +97,14 @@ var GameCompornent = (function (_super) {
         return _this;
     }
     GameCompornent.prototype.setCompornent = function (x, y, width, height) {
-        if (width <= 0) {
-            width = 1;
-            console.log("widthが0以下です");
-        }
-        if (height <= 0) {
-            height = 1;
-            console.log("heightが0以下です");
-        }
+        /*        if(width <= 0){
+                    console.log("widthが0以下です :" + width);
+                    width = 1;
+                }
+                if(height <= 0){
+                    console.log("heightが0以下です :" + height);
+                    height = 1;
+                }*/
         this.compornent = new egret.DisplayObjectContainer();
         this.compornent.width = width;
         this.compornent.height = height;
@@ -122,14 +122,14 @@ var UICompornent = (function (_super) {
         return _this;
     }
     UICompornent.prototype.setCompornent = function (x, y, width, height) {
-        if (width <= 0) {
-            width = 1;
-            console.log("widthが0以下です");
-        }
-        if (height <= 0) {
-            height = 1;
-            console.log("heightが0以下です");
-        }
+        /*        if(width <= 0){
+                    width = 1;
+                    console.log("widthが0以下です");
+                }
+                if(height <= 0){
+                    height = 1;
+                    console.log("heightが0以下です");
+                }*/
         this.compornent = new egret.DisplayObjectContainer();
         this.compornent.width = width;
         this.compornent.height = height;

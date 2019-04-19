@@ -15,20 +15,39 @@ var UILayer = (function (_super) {
         var _this = _super.call(this) || this;
         _this.setContainer();
         UILayer.index = GameObject.display.getChildIndex(UILayer.display);
+        UILayer.display.addEventListener(egret.TouchEvent.TOUCH_BEGIN, _this.push, _this);
+        UILayer.display.addEventListener(egret.TouchEvent.TOUCH_MOVE, _this.push, _this);
+        UILayer.display.addEventListener(egret.TouchEvent.TOUCH_END, _this.push, _this);
+        UILayer.display.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, _this.push, _this);
         return _this;
     }
     UILayer.prototype.setContainer = function () {
         UILayer.display = new eui.UILayer();
         GameObject.display.addChild(UILayer.display);
     };
+    UILayer.prototype.push = function (e) {
+        if (e.touchDown) {
+            UILayer.pushFlag = true;
+            console.log("push");
+        }
+        else {
+            UILayer.pushFlag = false;
+            console.log("release");
+        }
+    };
     UILayer.prototype.addDestroyMethod = function () {
         if (UILayer.display) {
+            UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.push, this);
+            UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.push, this);
+            UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_END, this.push, this);
+            UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.push, this);
             GameObject.display.removeChild(UILayer.display);
             UILayer.display = null;
         }
     };
     UILayer.prototype.updateContent = function () { };
     UILayer.display = null;
+    UILayer.pushFlag = false;
     return UILayer;
 }(GameObject));
 __reflect(UILayer.prototype, "UILayer");

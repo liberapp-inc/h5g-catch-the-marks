@@ -35,6 +35,7 @@ class Game{
         new UILayer();
         new Background();
         new Score(0,0,0,0, Util.color(255,255,255));
+        new Rect(100,100,300,300,Util.color(255,0,0), 30);
 
     }
 
