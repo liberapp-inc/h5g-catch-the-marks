@@ -16,7 +16,7 @@ var Main = (function (_super) {
         return _this;
     }
     Main.prototype.addToStage = function () {
-        GameObject.initial(this.stage);
+        GameObject.init(this.stage);
         Util.init(this);
         Game.init();
         egret.startTick(this.tickLoop, this);
@@ -35,8 +35,9 @@ var Game = (function () {
         this.height = egret.MainContext.instance.stage.stageHeight;
         this.width = egret.MainContext.instance.stage.stageWidth;
         /* new メソッドを記入*/
+        new GameStage();
+        new UILayer();
         new Background();
-        new Score();
     };
     return Game;
 }());
@@ -44,17 +45,20 @@ __reflect(Game.prototype, "Game");
 var Background = (function (_super) {
     __extends(Background, _super);
     function Background() {
-        var _this = _super.call(this) || this;
-        _this.shape = new egret.Shape();
-        _this.shape.graphics.beginFill(Util.color(255, 255, 255));
-        _this.shape.graphics.drawRect(0, 0, Game.width, Game.height);
-        _this.shape.graphics.endFill();
-        GameObject.display.addChild(_this.shape);
+        var _this = _super.call(this, 0, 0, Game.width, Game.height) || this;
+        _this.color = Util.color(0, 0, 0);
+        Background.I = _this;
+        _this.shapes[0] = new egret.Shape();
+        _this.shapes[0].graphics.beginFill(_this.color);
+        _this.shapes[0].graphics.drawRect(0, 0, Game.width, Game.height);
+        _this.shapes[0].graphics.endFill();
+        _this.compornent.addChild(_this.shapes[0]);
         return _this;
     }
     Background.prototype.updateContent = function () { };
+    Background.I = null;
     return Background;
-}(GameObject));
+}(GameCompornent));
 __reflect(Background.prototype, "Background");
 var CreateWorld = (function (_super) {
     __extends(CreateWorld, _super);

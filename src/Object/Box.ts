@@ -1,4 +1,4 @@
-class Box extends GameObject{
+abstract class Box extends GameObject{
     
     constructor(x : number, y : number, width : number, height : number, color:number) {
         super();
@@ -8,21 +8,23 @@ class Box extends GameObject{
     }
 
     setShape(x : number, y : number, width : number, height : number, color:number){
-        if( this.shape ){
-            GameObject.display.removeChild(this.shape);        
+        if( this.shapes[0] ){
+            GameObject.display.removeChild(this.shapes[0]);        
         }
 
-        this.shape = new egret.Shape();
-        this.shape.x = x;
-        this.shape.y = y;
-        this.shape.graphics.beginFill(color);
-        this.shape.graphics.drawRect(0, 0, width , height);
-        this.shape.graphics.endFill();
-        GameObject.display.addChild(this.shape);
+        this.shapes[0] = new egret.Shape();
+        this.shapes[0].anchorOffsetX += width/2;
+        this.shapes[0].anchorOffsetY += height/2;
+        this.shapes[0].x = x;
+        this.shapes[0].y = y;
+        this.shapes[0].graphics.beginFill(color);
+        this.shapes[0].graphics.drawRect(0, 0, width , height);
+        this.shapes[0].graphics.endFill();
+        GameObject.display.addChild(this.shapes[0]);
         
     }
 
-    updateContent(){};
+    //updateContent(){};
 
 }
 
@@ -43,7 +45,7 @@ abstract class PhysicsBox extends PhysicsObject{
         this.width = width ;
         this.height =height;
         this.color = color;
-        this.setShape(this.width, this.height);
+        this.setShape(x,y,width,height,color);
 
 
     }
@@ -60,20 +62,20 @@ abstract class PhysicsBox extends PhysicsObject{
     }
 
 
-    setShape(width: number, height : number){
-        if( this.shape ){
-            GameObject.display.removeChild(this.shape);        
+    setShape(x : number, y : number, width : number, height : number, color:number){
+        if( this.shapes[0] ){
+            GameObject.display.removeChild(this.shapes[0]);        
         }
 
-        this.shape = new egret.Shape();
-        this.shape.anchorOffsetX += width/2;
-        this.shape.anchorOffsetY += height/2;
-        this.shape.x = this.body.position[0];
-        this.shape.y = this.body.position[1];
-        this.shape.graphics.beginFill(this.color);
-        this.shape.graphics.drawRect(0, 0, width , height);
-        this.shape.graphics.endFill();
-        GameObject.display.addChild(this.shape);
+        this.shapes[0] = new egret.Shape();
+        this.shapes[0].anchorOffsetX += width/2;
+        this.shapes[0].anchorOffsetY += height/2;
+        this.shapes[0].x = x;
+        this.shapes[0].y = y;
+        this.shapes[0].graphics.beginFill(color);
+        this.shapes[0].graphics.drawRect(0, 0, width , height);
+        this.shapes[0].graphics.endFill();
+        GameObject.display.addChild(this.shapes[0]);
         
     }
 
@@ -85,4 +87,6 @@ class MyBox extends Box{
     constructor(x : number, y : number, width : number, height : number, color:number) {
         super(x, y, width, height, color);
     }
+
+    updateContent(){}
 }

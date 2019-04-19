@@ -10,36 +10,35 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var Ball = (function (_super) {
     __extends(Ball, _super);
-    function Ball(x, y, radius) {
-        var _this = _super.call(this) || this;
+    function Ball(x, y, width, height, radius) {
+        var _this = _super.call(this, x, y, width, height) || this;
         _this.radius = null;
         //Ball.I = this;
         _this.setShape(x, y, radius);
         return _this;
     }
     Ball.prototype.setShape = function (x, y, radius) {
-        if (this.shape) {
-            GameObject.display.removeChild(this.shape);
+        if (this.shapes[0]) {
+            GameObject.display.removeChild(this.shapes[0]);
         }
-        this.shape = new egret.Shape();
-        this.shape.x = x;
-        this.shape.y = y;
-        this.shape.graphics.beginFill(0xff0000);
-        this.shape.graphics.drawCircle(0, 0, radius);
-        this.shape.graphics.endFill();
-        GameObject.display.addChild(this.shape);
+        this.shapes[0] = new egret.Shape();
+        this.shapes[0].x = x;
+        this.shapes[0].y = y;
+        this.shapes[0].graphics.beginFill(0xff0000);
+        this.shapes[0].graphics.drawCircle(0, 0, radius);
+        this.shapes[0].graphics.endFill();
+        GameObject.display.addChild(this.shapes[0]);
     };
     Ball.prototype.updateContent = function () {
     };
     Ball.I = null; // singleton instance
     return Ball;
-}(GameObject));
+}(GameCompornent));
 __reflect(Ball.prototype, "Ball");
 var PhysicsBall = (function (_super) {
     __extends(PhysicsBall, _super);
     function PhysicsBall(x, y, radius) {
         var _this = _super.call(this) || this;
-        //static I:PhysicsBall = null;   // singleton instance
         _this.radius = null;
         //PhysicsBall.I = this;
         _this.setBody(x, y, radius);
@@ -55,28 +54,18 @@ var PhysicsBall = (function (_super) {
         CreateWorld.world.addBody(this.body);
     };
     PhysicsBall.prototype.setShape = function (x, y, radius) {
-        if (this.shape) {
-            GameObject.display.removeChild(this.shape);
+        if (this.shapes[0]) {
+            GameObject.display.removeChild(this.shapes[0]);
         }
-        this.shape = new egret.Shape();
-        this.shape.x = x;
-        this.shape.y = y;
-        this.shape.graphics.beginFill(0xff0000);
-        this.shape.graphics.drawCircle(0, 0, radius);
-        this.shape.graphics.endFill();
-        GameObject.display.addChild(this.shape);
+        this.shapes[0] = new egret.Shape();
+        this.shapes[0].x = x;
+        this.shapes[0].y = y;
+        this.shapes[0].graphics.beginFill(0xff0000);
+        this.shapes[0].graphics.drawCircle(0, 0, radius);
+        this.shapes[0].graphics.endFill();
+        GameObject.display.addChild(this.shapes[0]);
     };
     return PhysicsBall;
 }(PhysicsObject));
 __reflect(PhysicsBall.prototype, "PhysicsBall");
-var MyBall = (function (_super) {
-    __extends(MyBall, _super);
-    function MyBall(x, y, radius) {
-        var _this = _super.call(this, x, y, radius) || this;
-        Ball.I = _this;
-        return _this;
-    }
-    return MyBall;
-}(Ball));
-__reflect(MyBall.prototype, "MyBall");
 //# sourceMappingURL=Ball.js.map

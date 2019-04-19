@@ -7,7 +7,7 @@ class Main extends eui.UILayer {
  
     private addToStage() {
 
-        GameObject.initial( this.stage );
+        GameObject.init( this.stage );
         Util.init(this);
         Game.init();
         egret.startTick(this.tickLoop, this);
@@ -22,33 +22,37 @@ class Main extends eui.UILayer {
 
 class Game{
 
-    public static height: number;
-    public static width: number;
+    static height: number;
+    static width: number;
 
     static init() {
+        
         this.height = egret.MainContext.instance.stage.stageHeight;
         this.width  = egret.MainContext.instance.stage.stageWidth;
-        
+
         /* new メソッドを記入*/
+        new GameStage();
+        new UILayer();
         new Background();
-        new Score();
-        
+
     }
 
 
 }
 
 
-class Background extends GameObject{
+class Background extends GameCompornent{
 
+    static I : Background = null;
+    color :number = Util.color(0,0,0);
     constructor() {
-        super();
-
-        this.shape = new egret.Shape();
-        this.shape.graphics.beginFill(Util.color(255,255,255));
-        this.shape.graphics.drawRect(0, 0, Game.width, Game.height);
-        this.shape.graphics.endFill();
-        GameObject.display.addChild(this.shape);
+        super(0,0,Game.width,Game.height);
+        Background.I = this;
+        this.shapes[0] = new egret.Shape();
+        this.shapes[0].graphics.beginFill(this.color);
+        this.shapes[0].graphics.drawRect(0, 0, Game.width, Game.height);
+        this.shapes[0].graphics.endFill();
+        this.compornent.addChild(this.shapes[0]);
     }
     
     updateContent() {}

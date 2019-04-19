@@ -41,6 +41,14 @@ var Util = (function () {
         var code = parseInt(("0x" + r16 + g16 + b16), 16);
         return code;
     };
+    /*    static colorLerp( c0:number, c1:number, rate01:number):number {
+            let rate10 = 1 - rate01;
+            let color =
+                ( ((c0&0xff0000) * rate10 + (c1&0xff0000) * rate01) & 0xff0000 ) +
+                ( ((c0&0xff00) * rate10 + (c1&0xff00) * rate01) & 0xff00 ) +
+                ( ((c0&0xff) * rate10 + (c1&0xff) * rate01) & 0xff );
+            return color;
+        }*/
     Util.myText = function (x, y, text, size, ratio, color, bold) {
         var tf = new egret.TextField();
         tf.x = x;
@@ -51,6 +59,7 @@ var Util = (function () {
         tf.scaleX = ratio;
         tf.scaleY = ratio;
         tf.textColor = color;
+        tf.multiline = true;
         return tf;
     };
     Util.myStrokeText = function (x, y, text, size, ratio, color, font, stColor, stSize) {
@@ -67,6 +76,18 @@ var Util = (function () {
             }
         ];
         return tf;
+    };
+    Util.saveLocalStrage = function (key, saveValue) {
+        window.localStorage.setItem(key, saveValue.toString());
+    };
+    Util.loadLocalStrage = function (key, initialValue) {
+        var stringValue = window.localStorage.getItem(key); // string
+        if (stringValue == null) {
+            stringValue = initialValue.toString();
+            window.localStorage.setItem(key, stringValue.toString());
+        }
+        var value = parseInt(stringValue);
+        return value;
     };
     return Util;
 }());

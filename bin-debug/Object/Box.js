@@ -16,19 +16,19 @@ var Box = (function (_super) {
         return _this;
     }
     Box.prototype.setShape = function (x, y, width, height, color) {
-        if (this.shape) {
-            GameObject.display.removeChild(this.shape);
+        if (this.shapes[0]) {
+            GameObject.display.removeChild(this.shapes[0]);
         }
-        this.shape = new egret.Shape();
-        this.shape.x = x;
-        this.shape.y = y;
-        this.shape.graphics.beginFill(color);
-        this.shape.graphics.drawRect(0, 0, width, height);
-        this.shape.graphics.endFill();
-        GameObject.display.addChild(this.shape);
+        this.shapes[0] = new egret.Shape();
+        this.shapes[0].anchorOffsetX += width / 2;
+        this.shapes[0].anchorOffsetY += height / 2;
+        this.shapes[0].x = x;
+        this.shapes[0].y = y;
+        this.shapes[0].graphics.beginFill(color);
+        this.shapes[0].graphics.drawRect(0, 0, width, height);
+        this.shapes[0].graphics.endFill();
+        GameObject.display.addChild(this.shapes[0]);
     };
-    Box.prototype.updateContent = function () { };
-    ;
     return Box;
 }(GameObject));
 __reflect(Box.prototype, "Box");
@@ -41,7 +41,7 @@ var PhysicsBox = (function (_super) {
         _this.width = width;
         _this.height = height;
         _this.color = color;
-        _this.setShape(_this.width, _this.height);
+        _this.setShape(x, y, width, height, color);
         return _this;
     }
     PhysicsBox.prototype.setBody = function (x, y, width, height) {
@@ -52,19 +52,19 @@ var PhysicsBox = (function (_super) {
         this.body.addShape(this.bodyShape);
         CreateWorld.world.addBody(this.body);
     };
-    PhysicsBox.prototype.setShape = function (width, height) {
-        if (this.shape) {
-            GameObject.display.removeChild(this.shape);
+    PhysicsBox.prototype.setShape = function (x, y, width, height, color) {
+        if (this.shapes[0]) {
+            GameObject.display.removeChild(this.shapes[0]);
         }
-        this.shape = new egret.Shape();
-        this.shape.anchorOffsetX += width / 2;
-        this.shape.anchorOffsetY += height / 2;
-        this.shape.x = this.body.position[0];
-        this.shape.y = this.body.position[1];
-        this.shape.graphics.beginFill(this.color);
-        this.shape.graphics.drawRect(0, 0, width, height);
-        this.shape.graphics.endFill();
-        GameObject.display.addChild(this.shape);
+        this.shapes[0] = new egret.Shape();
+        this.shapes[0].anchorOffsetX += width / 2;
+        this.shapes[0].anchorOffsetY += height / 2;
+        this.shapes[0].x = x;
+        this.shapes[0].y = y;
+        this.shapes[0].graphics.beginFill(color);
+        this.shapes[0].graphics.drawRect(0, 0, width, height);
+        this.shapes[0].graphics.endFill();
+        GameObject.display.addChild(this.shapes[0]);
     };
     return PhysicsBox;
 }(PhysicsObject));
@@ -74,6 +74,7 @@ var MyBox = (function (_super) {
     function MyBox(x, y, width, height, color) {
         return _super.call(this, x, y, width, height, color) || this;
     }
+    MyBox.prototype.updateContent = function () { };
     return MyBox;
 }(Box));
 __reflect(MyBox.prototype, "MyBox");

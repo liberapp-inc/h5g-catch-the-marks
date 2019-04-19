@@ -49,7 +49,14 @@ class Util{
         return code;
     }
 
-
+/*    static colorLerp( c0:number, c1:number, rate01:number):number {
+        let rate10 = 1 - rate01;
+        let color = 
+            ( ((c0&0xff0000) * rate10 + (c1&0xff0000) * rate01) & 0xff0000 ) +
+            ( ((c0&0xff00) * rate10 + (c1&0xff00) * rate01) & 0xff00 ) +
+            ( ((c0&0xff) * rate10 + (c1&0xff) * rate01) & 0xff );
+        return color;
+    }*/
 
     static myText(x:number, y:number, text:string, size:number, ratio:number, color:number, bold:boolean): egret.TextField {
         
@@ -64,6 +71,8 @@ class Util{
         tf.scaleY = ratio;
 
         tf.textColor = color;
+
+        tf.multiline = true;
 
 
         return tf;
@@ -88,5 +97,18 @@ class Util{
         return tf;
     }
 
-    
+    static saveLocalStrage(key :string, saveValue : number){
+        window.localStorage.setItem(key, saveValue.toString());
+    }
+
+    static loadLocalStrage(key : string, initialValue : number):number{
+        let stringValue :string =  window.localStorage.getItem(key); // string
+        if( stringValue == null ){
+            stringValue = initialValue.toString();
+            window.localStorage.setItem(key, stringValue.toString());
+        }
+        let value : number = parseInt(stringValue);
+        return value;
+    }
+
 }
