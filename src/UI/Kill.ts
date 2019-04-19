@@ -1,30 +1,26 @@
-class Kill extends GameObject{
+class Kill extends UICompornent{
 
     static I:Kill = null;   // singleton instance
-
     kill:number = 0;
-
-    text:egret.TextField = null;
-    //textBest:egret.TextField = null;
-
+    text:eui.Label = null;
     textColor : number = 0x00FF3B;
 
-    constructor() {
-        super();
+    constructor(x : number, y : number, width : number, height : number, color : number) {
+        super(x,y,width,height);
         Kill.I = this;
 
-        this.textColor = Util.color(230,230,230);
+        this.textColor = color;
 
         this.kill = Util.loadLocalStrage("Kill.I.kill", Kill.I.kill);
 
         this.text = Util.myText(0, 50, "KILL : " + this.kill.toString() + " / 500", 100, 0.5, this.textColor, true);
-        GameObject.display.addChild( this.text );
+        UILayer.display.addChild( this.text );
 
 
     }
     
     addDestroyMethod() {
-        GameObject.display.removeChild( this.text );
+        UILayer.display.removeChild( this.text );
         this.text = null;
 
     }

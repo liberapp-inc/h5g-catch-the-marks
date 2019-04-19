@@ -32,19 +32,4 @@ var UILayer = (function (_super) {
     return UILayer;
 }(GameObject));
 __reflect(UILayer.prototype, "UILayer");
-var Hello = (function (_super) {
-    __extends(Hello, _super);
-    function Hello(x, y, width, height) {
-        var _this = _super.call(this, x, y, width, height) || this;
-        _this.method();
-        return _this;
-    }
-    Hello.prototype.method = function () {
-        var hello = Util.myText(0, 0, "Hello", 50, 1, 0xff0000, true);
-        this.compornent.addChild(hello);
-    };
-    Hello.prototype.updateContent = function () { };
-    return Hello;
-}(UICompornent));
-__reflect(Hello.prototype, "Hello");
 //# sourceMappingURL=UILayer.js.map

@@ -27,20 +27,3 @@ class UILayer extends GameObject{
 
 }
 
-
-
-class Hello extends UICompornent{
-
-    constructor(x : number, y : number, width : number, height : number){
-        super(x,y,width,height);
-        this.method();
-    }
-
-    method(){
-        let hello:eui.Label = Util.myText(0, 0, "Hello", 50, 1, 0xff0000, true);
-        this.compornent.addChild(hello);
-    }
-
-    updateContent(){}
-
-}

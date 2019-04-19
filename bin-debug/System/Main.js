@@ -38,7 +38,8 @@ var Game = (function () {
         new GameStage();
         new UILayer();
         new Background();
-        new Score(0, 0, 0, 0, Util.color(255, 255, 255));
+        //new Score(0,0,0,0, Util.color(255,255,255));
+        new Kill(0, 0, 0, 0, Util.color(255, 255, 255));
     };
     return Game;
 }());

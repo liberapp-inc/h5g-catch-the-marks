@@ -10,21 +10,20 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var Kill = (function (_super) {
     __extends(Kill, _super);
-    function Kill() {
-        var _this = _super.call(this) || this;
+    function Kill(x, y, width, height, color) {
+        var _this = _super.call(this, x, y, width, height) || this;
         _this.kill = 0;
         _this.text = null;
-        //textBest:egret.TextField = null;
         _this.textColor = 0x00FF3B;
         Kill.I = _this;
-        _this.textColor = Util.color(230, 230, 230);
+        _this.textColor = color;
         _this.kill = Util.loadLocalStrage("Kill.I.kill", Kill.I.kill);
         _this.text = Util.myText(0, 50, "KILL : " + _this.kill.toString() + " / 500", 100, 0.5, _this.textColor, true);
-        GameObject.display.addChild(_this.text);
+        UILayer.display.addChild(_this.text);
         return _this;
     }
     Kill.prototype.addDestroyMethod = function () {
-        GameObject.display.removeChild(this.text);
+        UILayer.display.removeChild(this.text);
         this.text = null;
     };
     Kill.prototype.updateContent = function () {
@@ -36,6 +35,6 @@ var Kill = (function (_super) {
     };
     Kill.I = null; // singleton instance
     return Kill;
-}(GameObject));
+}(UICompornent));
 __reflect(Kill.prototype, "Kill");
 //# sourceMappingURL=Kill.js.map
