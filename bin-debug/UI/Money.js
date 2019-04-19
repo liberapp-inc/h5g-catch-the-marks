@@ -10,28 +10,22 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var Money = (function (_super) {
     __extends(Money, _super);
-    function Money() {
-        var _this = _super.call(this) || this;
+    function Money(x, y, width, height, color) {
+        var _this = _super.call(this, x, y, width, height) || this;
         _this.money = 0;
         _this.bestMoney = 0;
         _this.text = null;
         _this.textBest = null;
         _this.textColor = 0x00FF3B;
-        _this.textColor = Util.color(230, 230, 230);
+        _this.textColor = color;
         Money.I = _this;
-        /*        let money = window.localStorage.getItem("money"); // string
-                
-                if( money == null ){
-                    money = "0";
-                    window.localStorage.setItem("money", money);
-                }*/
         _this.money = Util.loadLocalStrage("Money.I.money", Money.I.money);
         _this.text = Util.myText(0, 0, "MONEY : 0", 100, 0.5, _this.textColor, true);
-        GameObject.display.addChild(_this.text);
+        UILayer.display.addChild(_this.text);
         return _this;
     }
     Money.prototype.addDestroyMethod = function () {
-        GameObject.display.removeChild(this.text);
+        UILayer.display.removeChild(this.text);
         this.text = null;
     };
     Money.prototype.updateContent = function () {
@@ -43,7 +37,7 @@ var Money = (function (_super) {
     };
     Money.I = null; // singleton instance
     return Money;
-}(GameObject));
+}(UICompornent));
 __reflect(Money.prototype, "Money");
 var DropMoney = (function (_super) {
     __extends(DropMoney, _super);

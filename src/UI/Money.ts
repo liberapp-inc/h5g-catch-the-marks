@@ -1,4 +1,4 @@
-class Money extends GameObject{
+class Money extends UICompornent{
 
     static I:Money = null;   // singleton instance
 
@@ -7,31 +7,22 @@ class Money extends GameObject{
     bestMoney:number = 0;
     text:egret.TextField = null;
     textBest:egret.TextField = null;
-
     textColor : number = 0x00FF3B;
 
-    constructor() {
-        super();
+    constructor(x : number, y : number, width : number, height : number, color : number) {
+        super(x,y,width,height);
 
-        this.textColor = Util.color(230,230,230);
-
+        this.textColor = color;
         Money.I = this;
-
-/*        let money = window.localStorage.getItem("money"); // string
-        
-        if( money == null ){
-            money = "0";
-            window.localStorage.setItem("money", money);
-        }*/
         this.money = Util.loadLocalStrage("Money.I.money", Money.I.money);
 
         this.text = Util.myText(0, 0, "MONEY : 0", 100, 0.5, this.textColor, true);
-        GameObject.display.addChild( this.text );
+        UILayer.display.addChild( this.text );
 
     }
     
     addDestroyMethod() {
-        GameObject.display.removeChild( this.text );
+        UILayer.display.removeChild( this.text );
         this.text = null;
     }
 
