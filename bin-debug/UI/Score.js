@@ -10,39 +10,39 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var Score = (function (_super) {
     __extends(Score, _super);
-    function Score() {
-        var _this = _super.call(this) || this;
+    function Score(x, y, width, height, color) {
+        var _this = _super.call(this, x, y, width, height) || this;
         _this.score = 0;
         _this.bestScore = 0;
         _this.text = null;
         _this.textBest = null;
         _this.textColor = 0x00FF3B;
-        _this.textColor = Util.color(0, 255, 0);
+        _this.textColor = color;
         Score.I = _this;
         _this.score = 0;
         _this.text = Util.myText(0, 0, "SCORE : 0", 100, 0.5, _this.textColor, true);
-        GameObject.display.addChild(_this.text);
-        var bestScore = window.localStorage.getItem("bestScore"); // string
-        if (bestScore == null) {
-            bestScore = "0";
-            window.localStorage.setItem("bestScore", bestScore);
-        }
-        _this.bestScore = parseInt(bestScore);
-        _this.textBest = Util.myText(0, 50, "BEST : " + bestScore, 100, 0.5, _this.textColor, true);
-        GameObject.display.addChild(_this.textBest);
+        _this.compornent.addChild(_this.text);
+        /*        let bestScore = window.localStorage.getItem("bestScore"); // string
+                if( bestScore == null ){
+                    bestScore = "0";
+                    window.localStorage.setItem("bestScore", bestScore);
+                }*/
+        _this.bestScore = Util.loadLocalStrage("Score.I.bestScore", Score.I.bestScore);
+        _this.textBest = Util.myText(0, 50, "BEST : " + _this.bestScore.toString(), 100, 0.5, _this.textColor, true);
+        _this.compornent.addChild(_this.textBest);
         return _this;
     }
-    Score.prototype.onDestroy = function () {
-        GameObject.display.removeChild(this.text);
+    Score.prototype.addDestroyMethod = function () {
+        this.compornent.removeChild(this.text);
         this.text = null;
-        GameObject.display.removeChild(this.textBest);
+        this.compornent.removeChild(this.textBest);
         this.textBest = null;
     };
     Score.prototype.updateContent = function () {
         this.text.text = "SCORE : " + this.score.toFixed();
         if (this.bestScore < this.score) {
-            this.bestScore = this.score;
             this.textBest.text = "BEST : " + this.score.toFixed();
+            Util.saveLocalStrage("Score.I.bestScore", Score.I.bestScore);
         }
     };
     Score.prototype.addScore = function () {
@@ -50,6 +50,6 @@ var Score = (function (_super) {
     };
     Score.I = null; // singleton instance
     return Score;
-}(GameObject));
+}(UICompornent));
 __reflect(Score.prototype, "Score");
 //# sourceMappingURL=Score.js.map

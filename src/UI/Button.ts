@@ -1,6 +1,6 @@
 abstract class Button extends UICompornent{
 
-    indexText : egret.TextField = null;
+    indexText : eui.Label = null;
     indexTextColor : number = Util.color(230,230,230);
     shapeColor : number = Util.color(230,0,0);
     mask : egret.Shape = null;
