@@ -40,8 +40,7 @@ var Hello = (function (_super) {
         return _this;
     }
     Hello.prototype.method = function () {
-        var hello = new eui.Label();
-        hello.text = "Hello World";
+        var hello = Util.myText(0, 0, "Hello", 50, 1, 0xff0000, true);
         this.compornent.addChild(hello);
     };
     Hello.prototype.updateContent = function () { };

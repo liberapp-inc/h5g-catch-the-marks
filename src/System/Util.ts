@@ -58,35 +58,30 @@ class Util{
         return color;
     }*/
 
-    static myText(x:number, y:number, text:string, size:number, ratio:number, color:number, bold:boolean): egret.TextField {
+    static myText(x:number, y:number, text:string, size:number, ratio:number, color:number, bold:boolean): eui.Label {
         
-        let tf :egret.TextField = new egret.TextField();
-        tf.x = x;
-        tf.y = y;
-        tf.text = text;
-        tf.bold = bold;
-        tf.size = size;
-
-        tf.scaleX = ratio;
-        tf.scaleY = ratio;
-
-        tf.textColor = color;
-
-        tf.multiline = true;
-
-
-        return tf;
+        let label :eui.Label = new eui.Label();
+        label.scaleX = ratio;
+        label.scaleY = ratio;
+        label.bold = bold;
+        label.size = size;
+        label.text = text;
+        label.textColor = color;
+        label.x = x;
+        label.y = y;
+        label.multiline = true;
+        return label;
     }
 
     static myStrokeText(x:number, y:number, text:string, size:number, ratio:number, color:number, font:string, stColor:number, stSize:number): egret.TextField {
         
-        let tf :egret.TextField = new egret.TextField();
-        tf.x = x;
-        tf.y = y;
+        let label :eui.Label = new eui.Label();
+        label.x = x;
+        label.y = y;
 
-        tf.scaleX = ratio;
-        tf.scaleY = ratio;
-        tf.textFlow = <Array<egret.ITextElement>>[ 
+        label.scaleX = ratio;
+        label.scaleY = ratio;
+        label.textFlow = <Array<egret.ITextElement>>[ 
             {text: text, 
                 style: {
                     "textColor": color, "size": size, "fontFamily": font, "strokeColor": stColor, "stroke": stSize,
@@ -94,7 +89,7 @@ class Util{
             }
         ];    
 
-        return tf;
+        return label;
     }
 
     static saveLocalStrage(key :string, saveValue : number){

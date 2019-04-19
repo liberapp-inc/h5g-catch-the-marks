@@ -50,32 +50,32 @@ var Util = (function () {
             return color;
         }*/
     Util.myText = function (x, y, text, size, ratio, color, bold) {
-        var tf = new egret.TextField();
-        tf.x = x;
-        tf.y = y;
-        tf.text = text;
-        tf.bold = bold;
-        tf.size = size;
-        tf.scaleX = ratio;
-        tf.scaleY = ratio;
-        tf.textColor = color;
-        tf.multiline = true;
-        return tf;
+        var label = new eui.Label();
+        label.scaleX = ratio;
+        label.scaleY = ratio;
+        label.bold = bold;
+        label.size = size;
+        label.text = text;
+        label.textColor = color;
+        label.x = x;
+        label.y = y;
+        label.multiline = true;
+        return label;
     };
     Util.myStrokeText = function (x, y, text, size, ratio, color, font, stColor, stSize) {
-        var tf = new egret.TextField();
-        tf.x = x;
-        tf.y = y;
-        tf.scaleX = ratio;
-        tf.scaleY = ratio;
-        tf.textFlow = [
+        var label = new eui.Label();
+        label.x = x;
+        label.y = y;
+        label.scaleX = ratio;
+        label.scaleY = ratio;
+        label.textFlow = [
             { text: text,
                 style: {
                     "textColor": color, "size": size, "fontFamily": font, "strokeColor": stColor, "stroke": stSize,
                 }
             }
         ];
-        return tf;
+        return label;
     };
     Util.saveLocalStrage = function (key, saveValue) {
         window.localStorage.setItem(key, saveValue.toString());

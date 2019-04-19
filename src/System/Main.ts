@@ -34,6 +34,7 @@ class Game{
         new GameStage();
         new UILayer();
         new Background();
+        new Hello(0,0,0,0);
 
     }
 

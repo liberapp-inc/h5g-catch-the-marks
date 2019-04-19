@@ -37,8 +37,7 @@ class Hello extends UICompornent{
     }
 
     method(){
-        let hello:eui.Label = new eui.Label();
-        hello.text = "Hello World";
+        let hello:eui.Label = Util.myText(0, 0, "Hello", 50, 1, 0xff0000, true);
         this.compornent.addChild(hello);
     }
 

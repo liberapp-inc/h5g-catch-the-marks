@@ -38,6 +38,7 @@ var Game = (function () {
         new GameStage();
         new UILayer();
         new Background();
+        new Hello(0, 0, 0, 0);
     };
     return Game;
 }());
