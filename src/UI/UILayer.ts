@@ -1,15 +1,15 @@
 //UIコンポーネントを描画するレイヤー
-class UILayer extends GameObject{
+class UILayer{
 
     static display: eui.UILayer = null;
     static index :number;
     static pushFlag : boolean = false;
 
     constructor(){
-        super();
+        //super();
         this.setContainer();
         UILayer.index = GameObject.display.getChildIndex(UILayer.display) ;
-        UILayer.display.addEventListener( egret.TouchEvent.TOUCH_BEGIN, this.push, this );
+        UILayer.display.addEventListener( egret.TouchEvent.TOUCH_BEGIN, this.t, this );
         UILayer.display.addEventListener( egret.TouchEvent.TOUCH_MOVE, this.push, this );
         UILayer.display.addEventListener( egret.TouchEvent.TOUCH_END, this.push, this );
         UILayer.display.addEventListener( egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.push, this );
@@ -31,6 +31,10 @@ class UILayer extends GameObject{
         }
     }
 
+    t(){
+        console.log("t");
+        GameObject.transit = Game.init;
+    }
 
     addDestroyMethod(){
         if(UILayer.display){

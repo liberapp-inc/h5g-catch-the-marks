@@ -46,7 +46,7 @@ abstract class GameObject {
             });
             this.shapes = [];
         }
-        if(this.compornent){
+        if(this.compornent){           
             GameObject.display.removeChild(this.compornent);
             this.compornent=null;
         }
@@ -125,6 +125,25 @@ abstract class GameCompornent extends GameObject{
 
     //addDestroyMethod(){}
 
+    protected delete(){
+
+        this.addDestroyMethod();
+
+        if( this.shapes && this.compornent){
+            this.shapes.forEach(s => {
+                this.compornent.removeChild(s);
+                s = null;
+            });
+            this.shapes = [];
+        }
+        if(this.compornent){           
+            GameStage.display.removeChild(this.compornent);
+            this.compornent=null;
+        }
+/*        const newArray : GameObject[] = GameObject.objects.filter(obj => obj.destroyFlag !== true);
+        GameObject.objects = newArray;*/
+    }
+
 }
 
 //UILayerに描画する用のコンポーネント
@@ -156,5 +175,23 @@ abstract class UICompornent extends GameObject{
 
     //addDestroyMethod(){}
 
+    protected delete(){
+
+        this.addDestroyMethod();
+
+        if( this.shapes && this.compornent){
+            this.shapes.forEach(s => {
+                this.compornent.removeChild(s);
+                s = null;
+            });
+            this.shapes = [];
+        }
+        if(this.compornent){           
+            UILayer.display.removeChild(this.compornent);
+            this.compornent=null;
+        }
+/*        const newArray : GameObject[] = GameObject.objects.filter(obj => obj.destroyFlag !== true);
+        GameObject.objects = newArray;*/
+    }
 
 }

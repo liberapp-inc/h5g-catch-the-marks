@@ -110,6 +110,25 @@ var GameCompornent = (function (_super) {
         this.compornent.height = height;
         GameStage.display.addChild(this.compornent);
     };
+    //継承先でupdateContent(){}を追加すること
+    //addDestroyMethod(){}
+    GameCompornent.prototype.delete = function () {
+        var _this = this;
+        this.addDestroyMethod();
+        if (this.shapes && this.compornent) {
+            this.shapes.forEach(function (s) {
+                _this.compornent.removeChild(s);
+                s = null;
+            });
+            this.shapes = [];
+        }
+        if (this.compornent) {
+            GameStage.display.removeChild(this.compornent);
+            this.compornent = null;
+        }
+        /*        const newArray : GameObject[] = GameObject.objects.filter(obj => obj.destroyFlag !== true);
+                GameObject.objects = newArray;*/
+    };
     return GameCompornent;
 }(GameObject));
 __reflect(GameCompornent.prototype, "GameCompornent");
@@ -134,6 +153,25 @@ var UICompornent = (function (_super) {
         this.compornent.width = width;
         this.compornent.height = height;
         UILayer.display.addChild(this.compornent);
+    };
+    //継承先でupdateContent(){}を追加すること
+    //addDestroyMethod(){}
+    UICompornent.prototype.delete = function () {
+        var _this = this;
+        this.addDestroyMethod();
+        if (this.shapes && this.compornent) {
+            this.shapes.forEach(function (s) {
+                _this.compornent.removeChild(s);
+                s = null;
+            });
+            this.shapes = [];
+        }
+        if (this.compornent) {
+            UILayer.display.removeChild(this.compornent);
+            this.compornent = null;
+        }
+        /*        const newArray : GameObject[] = GameObject.objects.filter(obj => obj.destroyFlag !== true);
+                GameObject.objects = newArray;*/
     };
     UICompornent.compornents = [];
     return UICompornent;

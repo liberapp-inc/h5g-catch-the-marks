@@ -51,23 +51,18 @@ abstract class Katanuki extends GameCompornent{
 
     }
 
-    abstract push():void;
-
     addDestroyMethod(){
-        if(this.compornent.hasEventListener(egret.TouchEvent.TOUCH_MOVE)){
-            this.compornent.removeEventListener( egret.TouchEvent.TOUCH_MOVE, this.push, this );
-        }
 
         if(this.baseDisplay){
             this.baseShapes.forEach(s =>{
                 this.baseDisplay.removeChild(s);
                 s= null;
             });
-            this.compornent.removeChild(this.baseDisplay);
+            GameStage.display.removeChild(this.baseDisplay);
             this.baseDisplay = null;
         }
     }
-    updateContent(){}
+
 }
 
 
@@ -77,7 +72,7 @@ class Rect extends Katanuki{
         this.setRect(x, y, width*0.5, height*0.5, color,round);
     }
 
-    push(){}
+
 
     updateContent(){
         if(UILayer.pushFlag){
@@ -86,8 +81,8 @@ class Rect extends Katanuki{
                 this.compornent.scaleX = this.compornent.scaleY = 1;
                 this.expansionFlag = false;
             }
-            else if(this.compornent.scaleX <= 0.1){
-                this.compornent.scaleX = this.compornent.scaleY = 0.1;
+            else if(this.compornent.scaleX <= 0.05){
+                this.compornent.scaleX = this.compornent.scaleY = 0.05;
                 this.expansionFlag = true;
 
             }

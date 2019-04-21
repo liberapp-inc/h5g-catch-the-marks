@@ -52,19 +52,15 @@ var Katanuki = (function (_super) {
     };
     Katanuki.prototype.addDestroyMethod = function () {
         var _this = this;
-        if (this.compornent.hasEventListener(egret.TouchEvent.TOUCH_MOVE)) {
-            this.compornent.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.push, this);
-        }
         if (this.baseDisplay) {
             this.baseShapes.forEach(function (s) {
                 _this.baseDisplay.removeChild(s);
                 s = null;
             });
-            this.compornent.removeChild(this.baseDisplay);
+            GameStage.display.removeChild(this.baseDisplay);
             this.baseDisplay = null;
         }
     };
-    Katanuki.prototype.updateContent = function () { };
     return Katanuki;
 }(GameCompornent));
 __reflect(Katanuki.prototype, "Katanuki");
@@ -75,15 +71,14 @@ var Rect = (function (_super) {
         _this.setRect(x, y, width * 0.5, height * 0.5, color, round);
         return _this;
     }
-    Rect.prototype.push = function () { };
     Rect.prototype.updateContent = function () {
         if (UILayer.pushFlag) {
             if (this.compornent.scaleX >= 1) {
                 this.compornent.scaleX = this.compornent.scaleY = 1;
                 this.expansionFlag = false;
             }
-            else if (this.compornent.scaleX <= 0.1) {
-                this.compornent.scaleX = this.compornent.scaleY = 0.1;
+            else if (this.compornent.scaleX <= 0.05) {
+                this.compornent.scaleX = this.compornent.scaleY = 0.05;
                 this.expansionFlag = true;
             }
             if (this.expansionFlag) {
