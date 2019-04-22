@@ -40,12 +40,9 @@ var GameObject = (function () {
             });
             this.shapes = [];
         }
-        if (this.compornent) {
-            GameObject.display.removeChild(this.compornent);
-            this.compornent = null;
-        }
-        /*        const newArray : GameObject[] = GameObject.objects.filter(obj => obj.destroyFlag !== true);
-                GameObject.objects = newArray;*/
+        Util.remove(GameObject.display, this.compornent);
+        var newArray = GameObject.objects.filter(function (obj) { return obj.destroyFlag !== true; });
+        GameObject.objects = newArray;
     };
     GameObject.allDestroy = function () {
         GameObject.objects = GameObject.objects.filter(function (obj) {
@@ -97,14 +94,6 @@ var GameCompornent = (function (_super) {
         return _this;
     }
     GameCompornent.prototype.setCompornent = function (x, y, width, height) {
-        /*        if(width <= 0){
-                    console.log("widthが0以下です :" + width);
-                    width = 1;
-                }
-                if(height <= 0){
-                    console.log("heightが0以下です :" + height);
-                    height = 1;
-                }*/
         this.compornent = new egret.DisplayObjectContainer();
         this.compornent.width = width;
         this.compornent.height = height;
@@ -112,6 +101,7 @@ var GameCompornent = (function (_super) {
     };
     //継承先でupdateContent(){}を追加すること
     //addDestroyMethod(){}
+    //オーバーライド
     GameCompornent.prototype.delete = function () {
         var _this = this;
         this.addDestroyMethod();
@@ -123,11 +113,10 @@ var GameCompornent = (function (_super) {
             this.shapes = [];
         }
         if (this.compornent) {
-            GameStage.display.removeChild(this.compornent);
-            this.compornent = null;
+            Util.remove(GameStage.display, this.compornent);
         }
-        /*        const newArray : GameObject[] = GameObject.objects.filter(obj => obj.destroyFlag !== true);
-                GameObject.objects = newArray;*/
+        var newArray = GameObject.objects.filter(function (obj) { return obj.destroyFlag !== true; });
+        GameObject.objects = newArray;
     };
     return GameCompornent;
 }(GameObject));
@@ -141,14 +130,6 @@ var UICompornent = (function (_super) {
         return _this;
     }
     UICompornent.prototype.setCompornent = function (x, y, width, height) {
-        /*        if(width <= 0){
-                    width = 1;
-                    console.log("widthが0以下です");
-                }
-                if(height <= 0){
-                    height = 1;
-                    console.log("heightが0以下です");
-                }*/
         this.compornent = new egret.DisplayObjectContainer();
         this.compornent.width = width;
         this.compornent.height = height;
@@ -156,6 +137,7 @@ var UICompornent = (function (_super) {
     };
     //継承先でupdateContent(){}を追加すること
     //addDestroyMethod(){}
+    //オーバーライド
     UICompornent.prototype.delete = function () {
         var _this = this;
         this.addDestroyMethod();
@@ -167,11 +149,10 @@ var UICompornent = (function (_super) {
             this.shapes = [];
         }
         if (this.compornent) {
-            UILayer.display.removeChild(this.compornent);
-            this.compornent = null;
+            Util.remove(UILayer.display, this.compornent);
         }
-        /*        const newArray : GameObject[] = GameObject.objects.filter(obj => obj.destroyFlag !== true);
-                GameObject.objects = newArray;*/
+        var newArray = GameObject.objects.filter(function (obj) { return obj.destroyFlag !== true; });
+        GameObject.objects = newArray;
     };
     UICompornent.compornents = [];
     return UICompornent;

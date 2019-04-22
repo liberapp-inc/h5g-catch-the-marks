@@ -1,3 +1,10 @@
+enum ColorPallet{
+    BULE = 0x45d9fd,
+    WHITE = 0xf4f4f4,
+    RED = 0xee2560,
+    BLACK = 0x08182b,
+}
+
 class Main extends eui.UILayer {
 
     public constructor() {
@@ -34,8 +41,10 @@ class Game{
         new GameStage();
         new UILayer();
         new Background();
-        new Score(0,0,0,0, Util.color(255,255,255));
-        new Rect(100,100,300,300,Util.color(255,0,0), 30);
+        new Score(0,0,0,0, ColorPallet.BLACK);
+        new Frame(Game.width/12,Game.height/9.5,Game.width/1.2,Game.height/1.2, ColorPallet.BLACK);
+        new Circle(Game.width/2,Game.height/2,Game.width/20,Game.height/20, ColorPallet.RED);
+        new Cross(Game.width/2.5,Game.height/2,Game.width/26,Game.width/26, ColorPallet.BULE);
 
     }
 
@@ -46,7 +55,7 @@ class Game{
 class Background extends GameCompornent{
 
     static I : Background = null;
-    color :number = Util.color(0,0,0);
+    color :number = ColorPallet.WHITE;
     constructor() {
         super(0,0,Game.width,Game.height);
         Background.I = this;

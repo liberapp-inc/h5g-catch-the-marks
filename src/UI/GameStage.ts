@@ -1,11 +1,11 @@
 //図形などのGameObjectを描画するレイヤー
-class GameStage{
+class GameStage extends GameObject{
 
     static display : egret.DisplayObjectContainer = null;
     static index :number;
 
     constructor(){
-        //super();
+        super();
         this.setContainer();
         GameStage.index = GameObject.display.getChildIndex(GameStage.display) ;
 /*        GameStage.display.addEventListener( egret.TouchEvent.TOUCH_BEGIN, this.push, this );
@@ -34,6 +34,7 @@ class GameStage{
 
     addDestroyMethod(){
         if(GameStage.display){
+            GameStage.display.removeChildren();
             GameObject.display.removeChild(GameStage.display);
             GameStage.display =null;
         }

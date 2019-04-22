@@ -1,12 +1,21 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
+var __extends = this && this.__extends || function __extends(t, e) { 
+ function r() { 
+ this.constructor = t;
+}
+for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
+r.prototype = e.prototype, t.prototype = new r();
+};
 //図形などのGameObjectを描画するレイヤー
-var GameStage = (function () {
+var GameStage = (function (_super) {
+    __extends(GameStage, _super);
     function GameStage() {
-        //super();
-        this.setContainer();
+        var _this = _super.call(this) || this;
+        _this.setContainer();
         GameStage.index = GameObject.display.getChildIndex(GameStage.display);
+        return _this;
         /*        GameStage.display.addEventListener( egret.TouchEvent.TOUCH_BEGIN, this.push, this );
                 GameStage.display.addEventListener( egret.TouchEvent.TOUCH_MOVE, this.move, this );
                 GameStage.display.addEventListener( egret.TouchEvent.TOUCH_END, this.end, this );
@@ -27,6 +36,7 @@ var GameStage = (function () {
     };
     GameStage.prototype.addDestroyMethod = function () {
         if (GameStage.display) {
+            GameStage.display.removeChildren();
             GameObject.display.removeChild(GameStage.display);
             GameStage.display = null;
         }
@@ -34,6 +44,6 @@ var GameStage = (function () {
     GameStage.prototype.updateContent = function () { };
     GameStage.display = null;
     return GameStage;
-}());
+}(GameObject));
 __reflect(GameStage.prototype, "GameStage");
 //# sourceMappingURL=GameStage.js.map
