@@ -138,13 +138,13 @@ class Util{
 
     static setLine(x : number, y : number, length : number, degree : number, lineWidth:number, color:number ):egret.Shape{
 
-        const rad :number = degree * Math.PI/180;
+        const rad :number = (360 - degree) * Math.PI/180;//Egretの角度は時計回りが正
         const shape:egret.Shape = new egret.Shape();
         shape.x = x;
         shape.y = y;
         shape.graphics.lineStyle(lineWidth, color);
-        shape.graphics.moveTo(length*Math.cos(rad), length*Math.sin(rad));
-        shape.graphics.lineTo(0, 0);
+        shape.graphics.moveTo(0, 0);
+        shape.graphics.lineTo(length*Math.cos(rad), length*Math.sin(rad));
         return shape;
     }
 
@@ -153,6 +153,75 @@ class Util{
             display.removeChild(removeObject);
         }
         removeObject = null;
+    }
+
+    static vector(size : number, degree : number, startPointX?:number, startPointY?:number) : number[]{
+        let rad : number = (360 - degree) * Math.PI/180;//Egretの角度は時計回りが正
+        let v : number[] = [];
+
+        if(startPointX == undefined && startPointY == undefined){
+            v[0] = size * Math.cos(rad);//x
+            v[1] = size * Math.sin(rad);//y
+        }
+        else{
+            v[0] = size * Math.cos(rad) - startPointX;//x
+            v[1] = size * Math.sin(rad) - startPointY;//y
+        }
+        v[2] = size;
+        return v;
+    }
+
+    //外積
+    static cross(v1 : number[], v2 : number[]):number{
+        let cross : number = v1[0]*v2[1] - v1[1]*v2[0];
+        return cross;
+    }
+
+    //内積
+    static dot(v1 : number[], v2 : number[]):number{
+        let dot :number = v1[0] * v2[0] + v1[1]* v2[1];
+        return dot;
+    }
+
+    static cos(v1 : number[], v2 : number[]):number{
+        let v1Size : number = Math.sqrt(v1[0]**2 + v1[1]**2);       
+        let v2Size : number = Math.sqrt(v2[0]**2 + v2[1]**2);
+        if(v1Size < 0){v1Size *= -1;}
+        if(v2Size < 0){v2Size *= -1;}
+        let cos :number = Util.dot(v1,v2)/(v1Size*v2Size);
+        return cos;
+    }
+
+    static sin(v1 : number[], v2 : number[]):number{
+        let v1Size : number = Math.sqrt(v1[0]**2 + v1[1]**2);
+        let v2Size : number = Math.sqrt(v2[0]**2 + v2[1]**2);
+        if(v1Size < 0){v1Size *= -1;}
+        if(v2Size < 0){v2Size *= -1;}
+        let sin : number = Util.cross(v1,v2)/(v1Size*v2Size);
+        return sin;
+    }
+
+    //2次元反射ベクトル
+    //反射ベクトル = 入射べクトル - 法線ベクトル*2
+    //https://thinkit.co.jp/article/8466
+    static reflectionVector(inVector : number[], wallVector : number[]): number[]{
+        let cos : number = Util.cos(inVector, wallVector);
+        let sin : number = Util.sin(inVector, wallVector);
+
+        let normalVector :number[] = [];
+        normalVector[0] = - inVector[0] * cos;
+        normalVector[1] =  inVector[1] * sin;
+        normalVector[2] = Math.abs(inVector[2] * cos);
+
+        let reflectionVector : number[] = [];
+        for(let i = 0; i <=2; i++){
+            reflectionVector[i] = inVector[i] - normalVector[i]*2
+        }
+        console.log("cos" + cos);
+        console.log("sin" + sin);
+        console.log("wa" + wallVector[1]);
+        
+        return reflectionVector;
     }
 
 }

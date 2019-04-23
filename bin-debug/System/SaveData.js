@@ -19,10 +19,10 @@ var SaveData = (function () {
     };
     SaveData.load = function () {
         SaveData.object = Util.loadJSONLocalStrage("saveData");
-        console.log(SaveData.object.number);
-        /*        SaveData.object.number = 3;
-                console.log(SaveData.object.number);
-                SaveData.save();*/
+    };
+    SaveData.deleteData = function () {
+        SaveData.object = null;
+        SaveData.load();
     };
     SaveData.prototype.updateContent = function () { };
     return SaveData;

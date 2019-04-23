@@ -107,6 +107,8 @@ abstract class GameCompornent extends GameObject{
     setCompornent(x : number, y : number, width : number, height : number){
 
         this.compornent = new egret.DisplayObjectContainer();
+        this.compornent.x = x;
+        this.compornent.y = y;
         this.compornent.width = width;
         this.compornent.height = height;
         GameStage.display.addChild(this.compornent);

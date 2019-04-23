@@ -114,13 +114,13 @@ var Util = (function () {
         return shape;
     };
     Util.setLine = function (x, y, length, degree, lineWidth, color) {
-        var rad = degree * Math.PI / 180;
+        var rad = (360 - degree) * Math.PI / 180; //Egretの角度は時計回りが正
         var shape = new egret.Shape();
         shape.x = x;
         shape.y = y;
         shape.graphics.lineStyle(lineWidth, color);
-        shape.graphics.moveTo(length * Math.cos(rad), length * Math.sin(rad));
-        shape.graphics.lineTo(0, 0);
+        shape.graphics.moveTo(0, 0);
+        shape.graphics.lineTo(length * Math.cos(rad), length * Math.sin(rad));
         return shape;
     };
     Util.remove = function (display, removeObject) {
@@ -128,6 +128,73 @@ var Util = (function () {
             display.removeChild(removeObject);
         }
         removeObject = null;
+    };
+    Util.vector = function (size, degree, startPointX, startPointY) {
+        var rad = (360 - degree) * Math.PI / 180; //Egretの角度は時計回りが正
+        var v = [];
+        if (startPointX == undefined && startPointY == undefined) {
+            v[0] = size * Math.cos(rad); //x
+            v[1] = size * Math.sin(rad); //y
+        }
+        else {
+            v[0] = size * Math.cos(rad) - startPointX; //x
+            v[1] = size * Math.sin(rad) - startPointY; //y
+        }
+        v[2] = size;
+        return v;
+    };
+    //外積
+    Util.cross = function (v1, v2) {
+        var cross = v1[0] * v2[1] - v1[1] * v2[0];
+        return cross;
+    };
+    //内積
+    Util.dot = function (v1, v2) {
+        var dot = v1[0] * v2[0] + v1[1] * v2[1];
+        return dot;
+    };
+    Util.cos = function (v1, v2) {
+        var v1Size = Math.sqrt(Math.pow(v1[0], 2) + Math.pow(v1[1], 2));
+        var v2Size = Math.sqrt(Math.pow(v2[0], 2) + Math.pow(v2[1], 2));
+        if (v1Size < 0) {
+            v1Size *= -1;
+        }
+        if (v2Size < 0) {
+            v2Size *= -1;
+        }
+        var cos = Util.dot(v1, v2) / (v1Size * v2Size);
+        return cos;
+    };
+    Util.sin = function (v1, v2) {
+        var v1Size = Math.sqrt(Math.pow(v1[0], 2) + Math.pow(v1[1], 2));
+        var v2Size = Math.sqrt(Math.pow(v2[0], 2) + Math.pow(v2[1], 2));
+        if (v1Size < 0) {
+            v1Size *= -1;
+        }
+        if (v2Size < 0) {
+            v2Size *= -1;
+        }
+        var sin = Util.cross(v1, v2) / (v1Size * v2Size);
+        return sin;
+    };
+    //2次元反射ベクトル
+    //反射ベクトル = 入射べクトル - 法線ベクトル*2
+    //https://thinkit.co.jp/article/8466
+    Util.reflectionVector = function (inVector, wallVector) {
+        var cos = Util.cos(inVector, wallVector);
+        var sin = Util.sin(inVector, wallVector);
+        var normalVector = [];
+        normalVector[0] = -inVector[0] * cos;
+        normalVector[1] = inVector[1] * sin;
+        normalVector[2] = Math.abs(inVector[2] * cos);
+        var reflectionVector = [];
+        for (var i = 0; i <= 2; i++) {
+            reflectionVector[i] = inVector[i] - normalVector[i] * 2;
+        }
+        console.log("cos" + cos);
+        console.log("sin" + sin);
+        console.log("wa" + wallVector[1]);
+        return reflectionVector;
     };
     return Util;
 }());
