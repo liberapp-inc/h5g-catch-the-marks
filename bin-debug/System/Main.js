@@ -23,6 +23,7 @@ var Main = (function (_super) {
         return _this;
     }
     Main.prototype.addToStage = function () {
+        SaveData.load();
         GameObject.init(this.stage);
         Util.init(this);
         Game.init();

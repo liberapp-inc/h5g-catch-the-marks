@@ -12,7 +12,7 @@ class Frame extends GameCompornent{
         const shape:egret.Shape = new egret.Shape();
         shape.x = x;
         shape.y = y;
-        shape.graphics.lineStyle(6,this.lineColor);
+        shape.graphics.lineStyle(10,this.lineColor);
         shape.graphics.drawRect(0, 0, width, height);
         this.compornent.addChild(shape);
         GameStage.display.addChild(this.compornent);

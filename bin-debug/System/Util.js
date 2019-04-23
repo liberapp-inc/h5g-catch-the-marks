@@ -81,6 +81,20 @@ var Util = (function () {
         var value = parseInt(stringValue);
         return value;
     };
+    Util.saveJSONLocalStrage = function (key, saveObject) {
+        var jObject = JSON.stringify(saveObject);
+        window.localStorage.setItem(key, jObject);
+    };
+    Util.loadJSONLocalStrage = function (key) {
+        var jObject = window.localStorage.getItem(key); // string
+        if (jObject == null) {
+            SaveData.initial();
+            jObject = JSON.stringify(SaveData.object);
+            window.localStorage.setItem(key, jObject);
+        }
+        var object = JSON.parse(jObject);
+        return object;
+    };
     Util.setRect = function (x, y, width, height, color, round) {
         var shape = new egret.Shape();
         shape.x = x;

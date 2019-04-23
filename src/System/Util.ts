@@ -98,6 +98,22 @@ class Util{
         return value;
     }
 
+    static saveJSONLocalStrage(key :string, saveObject : any){
+        let jObject : string = JSON.stringify(saveObject);
+        window.localStorage.setItem(key, jObject);
+    }
+
+    static loadJSONLocalStrage(key : string):any{
+        let jObject :string =  window.localStorage.getItem(key); // string
+        if( jObject == null ){
+            SaveData.initial();
+            jObject = JSON.stringify(SaveData.object);
+            window.localStorage.setItem(key, jObject);
+        }
+        let object : any = JSON.parse(jObject);
+        return object;
+    }
+
     static setRect(x : number, y : number, width : number, height : number, color:number, round:number):egret.Shape{
 
         const shape:egret.Shape = new egret.Shape();
