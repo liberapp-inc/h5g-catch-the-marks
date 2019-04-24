@@ -3,14 +3,15 @@ class Mark extends GameCompornent{
     lineColor : number;
     length : number;
     isHit :boolean = false;
-    static moveSpeed : number = 1;
+    static moveSpeed : number = 2;
     moveVector : number[] = [];
 
     constructor(x : number, y : number, width : number, height : number, lineColor:number){
         super(x,y,width,height);
         this.lineColor = lineColor;
         this.length = Math.sqrt(width**2 + height**2);
-        this.setMoveVector(2, 45);
+        //this.setMoveVector(Mark.moveSpeed, 45);
+        this.setMoveVector(Mark.moveSpeed, Util.randomInt(30, 340));
 
     }
 
@@ -26,10 +27,10 @@ class Mark extends GameCompornent{
     }
 
     setCrossShape(x: number, y: number, width : number, height : number, length: number, degree: number, lineWidth: number, lineColor: number){
-        const shape:egret.Shape = Util.setLine(0, 0, length,degree, lineWidth, lineColor);
+        const shape:egret.Shape = Util.setLine(0, height, length,degree, lineWidth, lineColor);
         this.compornent.addChild(shape);
 
-        const shape2:egret.Shape = Util.setLine(0, 0 + height, length, 360-degree, lineWidth, lineColor);
+        const shape2:egret.Shape = Util.setLine(0, 0, length, 360-degree, lineWidth, lineColor);
         this.compornent.addChild(shape2);
         GameStage.display.addChild(this.compornent);
 
@@ -46,35 +47,27 @@ class Mark extends GameCompornent{
         this.compornent.y += this.moveVector[1];//Egret はy軸が下向き
     }
 
-    //反射ベクトル = 入射べクトル - 法線ベクトル*2
-    //https://thinkit.co.jp/article/8466
-    reflect(wallVector: number[]){
+/*    checkHit(){
+        this.isHit = Frame.I.shapes[0].hitTestPoint(this.compornent.x, this.compornent.y);
         if(this.isHit){
-            this.moveVector = Util.reflectionVector(this.moveVector, wallVector);
-            this.isHit = false;
+            this.reflect();
         }
-    }
 
-    checkHit(){
-        for(let i = 0; i <=3; i++){
-            if(Frame.I.shapes[i].hitTestPoint(this.compornent.x, this.compornent.y, true)){
-                this.isHit = Frame.I.shapes[i].hitTestPoint(this.compornent.x, this.compornent.y, true);
-                this.reflect(Frame.I.vector[i]);
-            }
+    }*/
 
+    reflect(){
+        if(this.compornent.x < Frame.I.compornent.x || this.compornent.x > Frame.I.compornent.x + Frame.I.compornent.width){
+            this.moveVector[0] *= -1;
         }
-/*        Frame.I.shapes.forEach(s =>{
-            if(s.hitTestPoint(this.compornent.x, this.compornent.y, true)){
-                this.isHit = s.hitTestPoint(this.compornent.x, this.compornent.y, true);
-            }
-        });*/
-        //this.isHit = Frame.I.shapes[2].hitTestPoint(this.compornent.x, this.compornent.y, true);
-        //console.log(this.isHit);
+        if(this.compornent.y < Frame.I.compornent.y || this.compornent.y > Frame.I.compornent.y + Frame.I.compornent.height){
+            this.moveVector[1] *= -1;
+        }
+
     }
 
     updateContent(){
         this.move();
-        this.checkHit();
+        this.reflect();
     }
 
 }

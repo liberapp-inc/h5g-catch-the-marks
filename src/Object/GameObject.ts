@@ -152,6 +152,8 @@ abstract class UICompornent extends GameObject{
     setCompornent(x : number, y : number, width : number, height : number){
 
         this.compornent = new egret.DisplayObjectContainer();
+        this.compornent.x = x;
+        this.compornent.y = y;
         this.compornent.width = width;
         this.compornent.height = height;
         UILayer.display.addChild(this.compornent);

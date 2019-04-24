@@ -16,7 +16,8 @@ var Mark = (function (_super) {
         _this.moveVector = [];
         _this.lineColor = lineColor;
         _this.length = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
-        _this.setMoveVector(2, 45);
+        //this.setMoveVector(Mark.moveSpeed, 45);
+        _this.setMoveVector(Mark.moveSpeed, Util.randomInt(30, 340));
         return _this;
     }
     Mark.prototype.setCircleShape = function (x, y, radius) {
@@ -30,9 +31,9 @@ var Mark = (function (_super) {
         this.shapes.push(shape);
     };
     Mark.prototype.setCrossShape = function (x, y, width, height, length, degree, lineWidth, lineColor) {
-        var shape = Util.setLine(0, 0, length, degree, lineWidth, lineColor);
+        var shape = Util.setLine(0, height, length, degree, lineWidth, lineColor);
         this.compornent.addChild(shape);
-        var shape2 = Util.setLine(0, 0 + height, length, 360 - degree, lineWidth, lineColor);
+        var shape2 = Util.setLine(0, 0, length, 360 - degree, lineWidth, lineColor);
         this.compornent.addChild(shape2);
         GameStage.display.addChild(this.compornent);
         this.shapes.push(shape);
@@ -45,34 +46,26 @@ var Mark = (function (_super) {
         this.compornent.x += this.moveVector[0];
         this.compornent.y += this.moveVector[1]; //Egret はy軸が下向き
     };
-    //反射ベクトル = 入射べクトル - 法線ベクトル*2
-    //https://thinkit.co.jp/article/8466
-    Mark.prototype.reflect = function (wallVector) {
-        if (this.isHit) {
-            this.moveVector = Util.reflectionVector(this.moveVector, wallVector);
-            this.isHit = false;
-        }
-    };
-    Mark.prototype.checkHit = function () {
-        for (var i = 0; i <= 3; i++) {
-            if (Frame.I.shapes[i].hitTestPoint(this.compornent.x, this.compornent.y, true)) {
-                this.isHit = Frame.I.shapes[i].hitTestPoint(this.compornent.x, this.compornent.y, true);
-                this.reflect(Frame.I.vector[i]);
+    /*    checkHit(){
+            this.isHit = Frame.I.shapes[0].hitTestPoint(this.compornent.x, this.compornent.y);
+            if(this.isHit){
+                this.reflect();
             }
+    
+        }*/
+    Mark.prototype.reflect = function () {
+        if (this.compornent.x < Frame.I.compornent.x || this.compornent.x > Frame.I.compornent.x + Frame.I.compornent.width) {
+            this.moveVector[0] *= -1;
         }
-        /*        Frame.I.shapes.forEach(s =>{
-                    if(s.hitTestPoint(this.compornent.x, this.compornent.y, true)){
-                        this.isHit = s.hitTestPoint(this.compornent.x, this.compornent.y, true);
-                    }
-                });*/
-        //this.isHit = Frame.I.shapes[2].hitTestPoint(this.compornent.x, this.compornent.y, true);
-        //console.log(this.isHit);
+        if (this.compornent.y < Frame.I.compornent.y || this.compornent.y > Frame.I.compornent.y + Frame.I.compornent.height) {
+            this.moveVector[1] *= -1;
+        }
     };
     Mark.prototype.updateContent = function () {
         this.move();
-        this.checkHit();
+        this.reflect();
     };
-    Mark.moveSpeed = 1;
+    Mark.moveSpeed = 2;
     return Mark;
 }(GameCompornent));
 __reflect(Mark.prototype, "Mark");

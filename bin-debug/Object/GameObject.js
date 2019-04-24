@@ -133,6 +133,8 @@ var UICompornent = (function (_super) {
     }
     UICompornent.prototype.setCompornent = function (x, y, width, height) {
         this.compornent = new egret.DisplayObjectContainer();
+        this.compornent.x = x;
+        this.compornent.y = y;
         this.compornent.width = width;
         this.compornent.height = height;
         UILayer.display.addChild(this.compornent);

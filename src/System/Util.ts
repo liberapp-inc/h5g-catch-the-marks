@@ -155,6 +155,9 @@ class Util{
         removeObject = null;
     }
 
+    //-----------------------------
+    //ベクトル系は間違っている可能性あり
+
     static vector(size : number, degree : number, startPointX?:number, startPointY?:number) : number[]{
         let rad : number = (360 - degree) * Math.PI/180;//Egretの角度は時計回りが正
         let v : number[] = [];
@@ -201,27 +204,49 @@ class Util{
         return sin;
     }
 
+    static size(v : number[]):number{
+        let size :number = Math.sqrt(v[0]**2 + v[1]**2);
+        return size;
+    }
+
     //2次元反射ベクトル
     //反射ベクトル = 入射べクトル - 法線ベクトル*2
     //https://thinkit.co.jp/article/8466
-    static reflectionVector(inVector : number[], wallVector : number[]): number[]{
+    static reflectionVector(inVector : number[], wallVector : number[], vectorNumber:number): number[]{
         let cos : number = Util.cos(inVector, wallVector);
         let sin : number = Util.sin(inVector, wallVector);
 
         let normalVector :number[] = [];
-        normalVector[0] = - inVector[0] * cos;
-        normalVector[1] =  inVector[1] * sin;
-        normalVector[2] = Math.abs(inVector[2] * cos);
+        switch(vectorNumber){
+            case FrameLine.RIGHT :
+            normalVector[0] = - inVector[0] * cos;
+            normalVector[1] =  0;
+            normalVector[2] = Math.abs(inVector[2] * cos);
+            break;
+            case FrameLine.LEFT :
+            normalVector[0] =  inVector[0] * cos;
+            normalVector[1] =  0;
+            normalVector[2] = Math.abs(inVector[2] * cos);
+            break;
+            case FrameLine.UP :
+            normalVector[0] = 0;
+            normalVector[1] = inVector[1] * sin;
+            normalVector[2] = Math.abs(inVector[2] * sin);
+            break;
+            case FrameLine.DOWN :
+            normalVector[0] = 0;
+            normalVector[1] = -inVector[1] * sin;
+            normalVector[2] = Math.abs(inVector[2] * sin);
+            break;
+        }
 
         let reflectionVector : number[] = [];
-        for(let i = 0; i <=2; i++){
-            reflectionVector[i] = inVector[i] - normalVector[i]*2
+        for(let i = 0; i <=1; i++){
+            reflectionVector[i] = inVector[i] - normalVector[i]*2;
         }
-        console.log("cos" + cos);
-        console.log("sin" + sin);
-        console.log("wa" + wallVector[1]);
-        
+       
         return reflectionVector;
     }
-
+    //----------------------------------------------
+    
 }
