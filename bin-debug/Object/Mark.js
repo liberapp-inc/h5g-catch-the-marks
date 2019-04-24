@@ -17,7 +17,7 @@ var Mark = (function (_super) {
         _this.lineColor = lineColor;
         _this.length = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
         //this.setMoveVector(Mark.moveSpeed, 45);
-        _this.setMoveVector(Mark.moveSpeed, Util.randomInt(30, 340));
+        _this.setMoveVector(Mark.moveSpeed, Util.randomInt(0, 359));
         return _this;
     }
     Mark.prototype.setCircleShape = function (x, y, radius) {
@@ -65,7 +65,7 @@ var Mark = (function (_super) {
         this.move();
         this.reflect();
     };
-    Mark.moveSpeed = 2;
+    Mark.moveSpeed = 1;
     return Mark;
 }(GameCompornent));
 __reflect(Mark.prototype, "Mark");

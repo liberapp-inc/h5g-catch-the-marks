@@ -3,7 +3,7 @@ class Mark extends GameCompornent{
     lineColor : number;
     length : number;
     isHit :boolean = false;
-    static moveSpeed : number = 2;
+    static moveSpeed : number = 1;
     moveVector : number[] = [];
 
     constructor(x : number, y : number, width : number, height : number, lineColor:number){
@@ -11,7 +11,7 @@ class Mark extends GameCompornent{
         this.lineColor = lineColor;
         this.length = Math.sqrt(width**2 + height**2);
         //this.setMoveVector(Mark.moveSpeed, 45);
-        this.setMoveVector(Mark.moveSpeed, Util.randomInt(30, 340));
+        this.setMoveVector(Mark.moveSpeed, Util.randomInt(0, 359));
 
     }
 
@@ -97,3 +97,5 @@ class Cross extends Mark{
 
 
 }
+
+

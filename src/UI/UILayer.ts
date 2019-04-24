@@ -23,17 +23,19 @@ class UILayer extends GameObject{
     push(e : egret.TouchEvent){
         if(e.touchDown){
             UILayer.pushFlag = true;
+            PushMark.I.push(e.stageX, e.stageY);
             console.log("push");
         }
         else{
             UILayer.pushFlag = false;
+            PushMark.I.release();
             console.log("release");
         }
     }
 
     out(e : egret.TouchEvent){
         UILayer.pushFlag = false;
-        console.log("release");
+        console.log("out");
     }
 
 
@@ -41,7 +43,7 @@ class UILayer extends GameObject{
         if(UILayer.display){
             UILayer.display.removeChildren();
             UILayer.display.removeEventListener( egret.TouchEvent.TOUCH_BEGIN, this.push, this );
-            UILayer.display.removeEventListener( egret.TouchEvent.TOUCH_MOVE, this.push, this );
+            //UILayer.display.removeEventListener( egret.TouchEvent.TOUCH_MOVE, this.push, this );
             UILayer.display.removeEventListener( egret.TouchEvent.TOUCH_END, this.push, this );
             UILayer.display.removeEventListener( egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.push, this );
             GameObject.display.removeChild(UILayer.display);

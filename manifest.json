@@ -16,6 +16,7 @@
 		"bin-debug/System/Util.js",
 		"bin-debug/Object/Mark.js",
 		"bin-debug/Object/Player.js",
+		"bin-debug/Object/PushMark.js",
 		"bin-debug/System/GameOver.js",
 		"bin-debug/System/Main.js",
 		"bin-debug/System/MyTween.js",

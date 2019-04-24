@@ -28,22 +28,24 @@ var UILayer = (function (_super) {
     UILayer.prototype.push = function (e) {
         if (e.touchDown) {
             UILayer.pushFlag = true;
+            PushMark.I.push(e.stageX, e.stageY);
             console.log("push");
         }
         else {
             UILayer.pushFlag = false;
+            PushMark.I.release();
             console.log("release");
         }
     };
     UILayer.prototype.out = function (e) {
         UILayer.pushFlag = false;
-        console.log("release");
+        console.log("out");
     };
     UILayer.prototype.addDestroyMethod = function () {
         if (UILayer.display) {
             UILayer.display.removeChildren();
             UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.push, this);
-            UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.push, this);
+            //UILayer.display.removeEventListener( egret.TouchEvent.TOUCH_MOVE, this.push, this );
             UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_END, this.push, this);
             UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.push, this);
             GameObject.display.removeChild(UILayer.display);
