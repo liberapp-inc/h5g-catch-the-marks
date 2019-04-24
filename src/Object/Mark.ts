@@ -52,7 +52,6 @@ class Mark extends GameCompornent{
     checkHit(){
         if(this.isHit){
             this.destroy();
-           
         }
 
     }
@@ -68,13 +67,12 @@ class Mark extends GameCompornent{
     }
 
     updateContent(){
-        if(!this.isHit){
-            this.move();
-            this.reflect();
-        }
-        if(this.isHit ==true && UILayer.pushFlag == false){
+        if(this.isHit && !UILayer.pushFlag){
             this.destroy();
         }
+            this.move();
+            this.reflect();
+
         //this.checkHit();
     }
 
@@ -88,8 +86,6 @@ class Circle extends Mark{
         super(x,y,width,height,lineColor);
         this.setCircleShape(x,y,width/2);
     }
-
-
 }
 
 class Cross extends Mark{
@@ -101,8 +97,53 @@ class Cross extends Mark{
         super(x,y,width,height,lineColor);
         this.setCrossShape(x,y,width,height,this.length,45,6,lineColor);
     }
-
-
 }
 
+class Special extends Mark{
+
+    lineColor : number;
+    radius : number;
+
+    constructor(x : number, y : number, width : number, height : number, lineColor:number){
+        super(x,y,width,height,lineColor);
+        this.lineColor = lineColor;
+        this.radius = width/2;
+        this.setCircleShape(x,y,width/2);
+    }
+
+    setCircleShape(x : number, y : number, radius:number){
+        const shape:egret.Shape = new egret.Shape();
+        shape.graphics.lineStyle(6,this.lineColor);
+        shape.graphics.beginFill(this.lineColor);
+        shape.graphics.drawCircle(0, 0, radius);
+        shape.graphics.endFill();
+        this.compornent.addChild(shape);
+        GameStage.display.addChild(this.compornent);
+        this.shapes.push(shape);
+    }
+
+    changeShape(radius:number) : egret.Shape{
+        const shape : egret.Shape = new egret.Shape();
+        shape.graphics.lineStyle(6,this.lineColor);
+        shape.graphics.drawCircle(0, 0, radius);
+        return shape;
+    }
+
+    addDestroyMethod(){
+        Mark.mark.forEach(m => {
+            if(m.compornent){
+               
+                m.shapes = [];
+                m.compornent.removeChildren();
+                const s : egret.Shape = this.changeShape(this.radius);
+                m.shapes.push(s);
+                m.compornent.addChild(s);
+            }
+/*            m.shapes.forEach(s =>{
+            });*/
+        });
+        
+    }
+
+}
 

@@ -61,13 +61,11 @@ var Mark = (function (_super) {
         }
     };
     Mark.prototype.updateContent = function () {
-        if (!this.isHit) {
-            this.move();
-            this.reflect();
-        }
-        if (this.isHit == true && UILayer.pushFlag == false) {
+        if (this.isHit && !UILayer.pushFlag) {
             this.destroy();
         }
+        this.move();
+        this.reflect();
         //this.checkHit();
     };
     Mark.moveSpeed = 2;
@@ -95,4 +93,46 @@ var Cross = (function (_super) {
     return Cross;
 }(Mark));
 __reflect(Cross.prototype, "Cross");
+var Special = (function (_super) {
+    __extends(Special, _super);
+    function Special(x, y, width, height, lineColor) {
+        var _this = _super.call(this, x, y, width, height, lineColor) || this;
+        _this.lineColor = lineColor;
+        _this.radius = width / 2;
+        _this.setCircleShape(x, y, width / 2);
+        return _this;
+    }
+    Special.prototype.setCircleShape = function (x, y, radius) {
+        var shape = new egret.Shape();
+        shape.graphics.lineStyle(6, this.lineColor);
+        shape.graphics.beginFill(this.lineColor);
+        shape.graphics.drawCircle(0, 0, radius);
+        shape.graphics.endFill();
+        this.compornent.addChild(shape);
+        GameStage.display.addChild(this.compornent);
+        this.shapes.push(shape);
+    };
+    Special.prototype.changeShape = function (radius) {
+        var shape = new egret.Shape();
+        shape.graphics.lineStyle(6, this.lineColor);
+        shape.graphics.drawCircle(0, 0, radius);
+        return shape;
+    };
+    Special.prototype.addDestroyMethod = function () {
+        var _this = this;
+        Mark.mark.forEach(function (m) {
+            if (m.compornent) {
+                m.shapes = [];
+                m.compornent.removeChildren();
+                var s = _this.changeShape(_this.radius);
+                m.shapes.push(s);
+                m.compornent.addChild(s);
+            }
+            /*            m.shapes.forEach(s =>{
+                        });*/
+        });
+    };
+    return Special;
+}(Mark));
+__reflect(Special.prototype, "Special");
 //# sourceMappingURL=Mark.js.map
