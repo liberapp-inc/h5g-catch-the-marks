@@ -44,9 +44,9 @@ class Game{
         new Background();
         new Score(0,0,0,0, ColorPallet.BLACK);
         new Frame(Game.width/12,Game.height/9.5,Game.width/1.2,Game.height/1.2, ColorPallet.BLACK);
-        for(let i = 0; i < 25; i++){
-        new Circle(Game.width/2,Game.height/2,Game.width/20,Game.height/20, ColorPallet.RED);
-        new Cross(Game.width/2.5,Game.height/2,Game.width/26,Game.width/26, ColorPallet.BULE);
+        for(let i = 0; i < 10; i++){
+        new Circle(Game.width/1.5,Game.height/2,Game.width/20,Game.width/20, ColorPallet.RED);
+        new Cross(Game.width/3.0,Game.height/2,Game.width/26,Game.width/26, ColorPallet.BULE);
 
         }
         new PushMark(0,0,Game.width,Game.width,ColorPallet.BLACK);

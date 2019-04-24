@@ -3,8 +3,9 @@ class Mark extends GameCompornent{
     lineColor : number;
     length : number;
     isHit :boolean = false;
-    static moveSpeed : number = 1;
+    static moveSpeed : number = 2;
     moveVector : number[] = [];
+    static mark : Mark[]=[];
 
     constructor(x : number, y : number, width : number, height : number, lineColor:number){
         super(x,y,width,height);
@@ -12,6 +13,7 @@ class Mark extends GameCompornent{
         this.length = Math.sqrt(width**2 + height**2);
         //this.setMoveVector(Mark.moveSpeed, 45);
         this.setMoveVector(Mark.moveSpeed, Util.randomInt(0, 359));
+        Mark.mark.push(this);
 
     }
 
@@ -47,13 +49,13 @@ class Mark extends GameCompornent{
         this.compornent.y += this.moveVector[1];//Egret はy軸が下向き
     }
 
-/*    checkHit(){
-        this.isHit = Frame.I.shapes[0].hitTestPoint(this.compornent.x, this.compornent.y);
+    checkHit(){
         if(this.isHit){
-            this.reflect();
+            this.destroy();
+           
         }
 
-    }*/
+    }
 
     reflect(){
         if(this.compornent.x < Frame.I.compornent.x || this.compornent.x > Frame.I.compornent.x + Frame.I.compornent.width){
@@ -66,8 +68,14 @@ class Mark extends GameCompornent{
     }
 
     updateContent(){
-        this.move();
-        this.reflect();
+        if(!this.isHit){
+            this.move();
+            this.reflect();
+        }
+        if(this.isHit ==true && UILayer.pushFlag == false){
+            this.destroy();
+        }
+        //this.checkHit();
     }
 
 }
@@ -80,7 +88,6 @@ class Circle extends Mark{
         super(x,y,width,height,lineColor);
         this.setCircleShape(x,y,width/2);
     }
-
 
 
 }

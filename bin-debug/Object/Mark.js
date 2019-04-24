@@ -18,6 +18,7 @@ var Mark = (function (_super) {
         _this.length = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
         //this.setMoveVector(Mark.moveSpeed, 45);
         _this.setMoveVector(Mark.moveSpeed, Util.randomInt(0, 359));
+        Mark.mark.push(_this);
         return _this;
     }
     Mark.prototype.setCircleShape = function (x, y, radius) {
@@ -46,13 +47,11 @@ var Mark = (function (_super) {
         this.compornent.x += this.moveVector[0];
         this.compornent.y += this.moveVector[1]; //Egret はy軸が下向き
     };
-    /*    checkHit(){
-            this.isHit = Frame.I.shapes[0].hitTestPoint(this.compornent.x, this.compornent.y);
-            if(this.isHit){
-                this.reflect();
-            }
-    
-        }*/
+    Mark.prototype.checkHit = function () {
+        if (this.isHit) {
+            this.destroy();
+        }
+    };
     Mark.prototype.reflect = function () {
         if (this.compornent.x < Frame.I.compornent.x || this.compornent.x > Frame.I.compornent.x + Frame.I.compornent.width) {
             this.moveVector[0] *= -1;
@@ -62,10 +61,17 @@ var Mark = (function (_super) {
         }
     };
     Mark.prototype.updateContent = function () {
-        this.move();
-        this.reflect();
+        if (!this.isHit) {
+            this.move();
+            this.reflect();
+        }
+        if (this.isHit == true && UILayer.pushFlag == false) {
+            this.destroy();
+        }
+        //this.checkHit();
     };
-    Mark.moveSpeed = 1;
+    Mark.moveSpeed = 2;
+    Mark.mark = [];
     return Mark;
 }(GameCompornent));
 __reflect(Mark.prototype, "Mark");

@@ -29,17 +29,14 @@ var UILayer = (function (_super) {
         if (e.touchDown) {
             UILayer.pushFlag = true;
             PushMark.I.push(e.stageX, e.stageY);
-            console.log("push");
         }
         else {
             UILayer.pushFlag = false;
             PushMark.I.release();
-            console.log("release");
         }
     };
     UILayer.prototype.out = function (e) {
         UILayer.pushFlag = false;
-        console.log("out");
     };
     UILayer.prototype.addDestroyMethod = function () {
         if (UILayer.display) {

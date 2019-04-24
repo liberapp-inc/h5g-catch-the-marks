@@ -3,12 +3,14 @@ class PushMark extends UICompornent{
     static I : PushMark = null;
     lineColor : number;
     expansion : boolean = true;
+    
 
 
     constructor(x: number, y: number, width : number, height : number, lineColor: number){
         super(x,y,width,height);
         PushMark.I = this;
-        this.setCircleShape(x,y,width/2);
+        this.adjustmentCompornent();
+        this.setCircleShape(this.compornent.anchorOffsetX,this.compornent.anchorOffsetY,width/2);
     }
 
     setCircleShape(x : number, y : number, radius:number){
@@ -22,6 +24,14 @@ class PushMark extends UICompornent{
         this.shapes.push(shape);
         
     }
+
+    adjustmentCompornent(){
+        this.compornent.anchorOffsetX += this.compornent.width/2;
+        this.compornent.anchorOffsetY += this.compornent.height/2;
+/*        let s = Util.setRect(0,0,this.compornent.width, this.compornent.height, 0xff0000, 0);
+        this.compornent.addChild(s);*/
+    }
+
 
     push(x:number, y:number){
         this.compornent.scaleX = this.compornent.scaleY = 0.01;
@@ -46,18 +56,35 @@ class PushMark extends UICompornent{
             }
 
             if(this.expansion){
-                this.compornent.scaleX = this.compornent.scaleY += 0.01;
+                this.compornent.scaleX = this.compornent.scaleY += 0.005;
             }
             else{
-                this.compornent.scaleX = this.compornent.scaleY -= 0.01;
+                this.compornent.scaleX = this.compornent.scaleY -= 0.005;
             }
         }
             
+    }
+
+    checkHit(){
+        if(UILayer.pushFlag){
+            Mark.mark.forEach(m => {
+                if(this.compornent.hitTestPoint(m.compornent.x, m.compornent.y)){
+                    m.isHit = true;
+                }
+/*                if(this.compornent.x <= m.compornent.x && this.compornent.x + this.compornent.width >= m.compornent.x ){
+                if(this.compornent.y <= m.compornent.y && this.compornent.y + this.compornent.height >= m.compornent.y ){
+                    m.isHit = true;
+                }
+                }*/
+
+            });
+        }
     }
     
 
     updateContent(){
         this.switchExpansion();
+        this.checkHit();
 
     }
 

@@ -24,18 +24,15 @@ class UILayer extends GameObject{
         if(e.touchDown){
             UILayer.pushFlag = true;
             PushMark.I.push(e.stageX, e.stageY);
-            console.log("push");
         }
         else{
             UILayer.pushFlag = false;
             PushMark.I.release();
-            console.log("release");
         }
     }
 
     out(e : egret.TouchEvent){
         UILayer.pushFlag = false;
-        console.log("out");
     }
 
 
