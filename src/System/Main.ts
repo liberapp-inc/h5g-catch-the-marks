@@ -50,6 +50,8 @@ class Game{
         }
         new Special(Game.width/1.5,Game.height/2,Game.width/20,Game.width/20, ColorPallet.RED);
         new PushMark(0,0,Game.width,Game.width,ColorPallet.BLACK);
+        new Bonus(0,0,0,0, ColorPallet.BLACK);
+        
     }
 
 

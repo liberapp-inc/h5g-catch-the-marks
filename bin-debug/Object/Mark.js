@@ -14,6 +14,7 @@ var Mark = (function (_super) {
         var _this = _super.call(this, x, y, width, height) || this;
         _this.isHit = false;
         _this.moveVector = [];
+        _this.circle = false;
         _this.lineColor = lineColor;
         _this.length = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
         //this.setMoveVector(Mark.moveSpeed, 45);
@@ -37,6 +38,25 @@ var Mark = (function (_super) {
         var shape2 = Util.setLine(0, 0, length, 360 - degree, lineWidth, lineColor);
         this.compornent.addChild(shape2);
         GameStage.display.addChild(this.compornent);
+        this.shapes.push(shape);
+        this.shapes.push(shape2);
+    };
+    Mark.prototype.changeShape = function (radius) {
+        this.shapes = [];
+        this.compornent.removeChildren();
+        var shape = new egret.Shape();
+        shape.graphics.lineStyle(6, this.lineColor);
+        shape.graphics.drawCircle(0, 0, radius);
+        this.compornent.addChild(shape);
+        this.shapes.push(shape);
+    };
+    Mark.prototype.reverseShape = function (x, y, width, height, length, degree, lineWidth, lineColor) {
+        this.shapes = [];
+        this.compornent.removeChildren();
+        var shape = Util.setLine(0, height, length, degree, lineWidth, lineColor);
+        this.compornent.addChild(shape);
+        var shape2 = Util.setLine(0, 0, length, 360 - degree, lineWidth, lineColor);
+        this.compornent.addChild(shape2);
         this.shapes.push(shape);
         this.shapes.push(shape2);
     };
@@ -77,6 +97,7 @@ var Circle = (function (_super) {
     __extends(Circle, _super);
     function Circle(x, y, width, height, lineColor) {
         var _this = _super.call(this, x, y, width, height, lineColor) || this;
+        _this.circle = true;
         _this.setCircleShape(x, y, width / 2);
         return _this;
     }
@@ -87,6 +108,7 @@ var Cross = (function (_super) {
     __extends(Cross, _super);
     function Cross(x, y, width, height, lineColor) {
         var _this = _super.call(this, x, y, width, height, lineColor) || this;
+        _this.circle = false;
         _this.setCrossShape(x, y, width, height, _this.length, 45, 6, lineColor);
         return _this;
     }
@@ -99,6 +121,7 @@ var Special = (function (_super) {
         var _this = _super.call(this, x, y, width, height, lineColor) || this;
         _this.lineColor = lineColor;
         _this.radius = width / 2;
+        _this.circle = true;
         _this.setCircleShape(x, y, width / 2);
         return _this;
     }
@@ -112,21 +135,23 @@ var Special = (function (_super) {
         GameStage.display.addChild(this.compornent);
         this.shapes.push(shape);
     };
-    Special.prototype.changeShape = function (radius) {
-        var shape = new egret.Shape();
-        shape.graphics.lineStyle(6, this.lineColor);
-        shape.graphics.drawCircle(0, 0, radius);
-        return shape;
-    };
+    /*    changeShape(radius:number) : egret.Shape{
+            const shape : egret.Shape = new egret.Shape();
+            shape.graphics.lineStyle(6,this.lineColor);
+            shape.graphics.drawCircle(0, 0, radius);
+            return shape;
+        }*/
     Special.prototype.addDestroyMethod = function () {
         var _this = this;
+        Bonus.bonusFlag = true;
         Mark.mark.forEach(function (m) {
-            if (m.compornent) {
-                m.shapes = [];
-                m.compornent.removeChildren();
-                var s = _this.changeShape(_this.radius);
-                m.shapes.push(s);
-                m.compornent.addChild(s);
+            if (m.compornent && !m.circle) {
+                m.changeShape(_this.radius);
+                /*                m.shapes = [];
+                                m.compornent.removeChildren();
+                                const s : egret.Shape = this.changeShape(this.radius);
+                                m.shapes.push(s);
+                                m.compornent.addChild(s);*/
             }
             /*            m.shapes.forEach(s =>{
                         });*/

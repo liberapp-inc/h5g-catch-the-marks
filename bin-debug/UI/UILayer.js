@@ -34,6 +34,13 @@ var UILayer = (function (_super) {
             UILayer.pushFlag = false;
             PushMark.I.release();
         }
+        if (Bonus.bonusFlag) {
+            Mark.mark.forEach(function (m) {
+                if (!m.circle) {
+                    m.reverseShape(Game.width / 3.0, Game.height / 2, Game.width / 26, Game.width / 26, m.length, 45, 6, m.lineColor);
+                }
+            });
+        }
     };
     UILayer.prototype.out = function (e) {
         UILayer.pushFlag = false;

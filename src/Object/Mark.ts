@@ -6,6 +6,7 @@ class Mark extends GameCompornent{
     static moveSpeed : number = 2;
     moveVector : number[] = [];
     static mark : Mark[]=[];
+    circle : boolean = false;
 
     constructor(x : number, y : number, width : number, height : number, lineColor:number){
         super(x,y,width,height);
@@ -35,6 +36,31 @@ class Mark extends GameCompornent{
         const shape2:egret.Shape = Util.setLine(0, 0, length, 360-degree, lineWidth, lineColor);
         this.compornent.addChild(shape2);
         GameStage.display.addChild(this.compornent);
+
+        this.shapes.push(shape);
+        this.shapes.push(shape2);
+    }
+
+    changeShape(radius:number) {
+        this.shapes = [];
+        this.compornent.removeChildren();
+        const shape : egret.Shape = new egret.Shape();
+        shape.graphics.lineStyle(6,this.lineColor);
+        shape.graphics.drawCircle(0, 0, radius);
+        this.compornent.addChild(shape);
+        this.shapes.push(shape);
+
+    }
+
+    reverseShape(x: number, y: number, width : number, height : number, length: number, degree: number, lineWidth: number, lineColor: number) {
+        this.shapes = [];
+        this.compornent.removeChildren();
+        
+        const shape:egret.Shape = Util.setLine(0, height, length,degree, lineWidth, lineColor);
+        this.compornent.addChild(shape);
+
+        const shape2:egret.Shape = Util.setLine(0, 0, length, 360-degree, lineWidth, lineColor);
+        this.compornent.addChild(shape2);
 
         this.shapes.push(shape);
         this.shapes.push(shape2);
@@ -84,6 +110,7 @@ class Circle extends Mark{
 
     constructor(x : number, y : number, width : number, height : number, lineColor:number){
         super(x,y,width,height,lineColor);
+        this.circle = true;
         this.setCircleShape(x,y,width/2);
     }
 }
@@ -95,6 +122,7 @@ class Cross extends Mark{
 
     constructor(x: number, y: number, width : number, height : number, lineColor: number){
         super(x,y,width,height,lineColor);
+        this.circle = false;
         this.setCrossShape(x,y,width,height,this.length,45,6,lineColor);
     }
 }
@@ -103,11 +131,11 @@ class Special extends Mark{
 
     lineColor : number;
     radius : number;
-
     constructor(x : number, y : number, width : number, height : number, lineColor:number){
         super(x,y,width,height,lineColor);
         this.lineColor = lineColor;
         this.radius = width/2;
+        this.circle = true;
         this.setCircleShape(x,y,width/2);
     }
 
@@ -122,22 +150,23 @@ class Special extends Mark{
         this.shapes.push(shape);
     }
 
-    changeShape(radius:number) : egret.Shape{
+/*    changeShape(radius:number) : egret.Shape{
         const shape : egret.Shape = new egret.Shape();
         shape.graphics.lineStyle(6,this.lineColor);
         shape.graphics.drawCircle(0, 0, radius);
         return shape;
-    }
+    }*/
 
     addDestroyMethod(){
+        Bonus.bonusFlag = true;
         Mark.mark.forEach(m => {
-            if(m.compornent){
-               
-                m.shapes = [];
+            if(m.compornent && !m.circle){
+                m.changeShape(this.radius);
+/*                m.shapes = [];
                 m.compornent.removeChildren();
                 const s : egret.Shape = this.changeShape(this.radius);
                 m.shapes.push(s);
-                m.compornent.addChild(s);
+                m.compornent.addChild(s);*/
             }
 /*            m.shapes.forEach(s =>{
             });*/

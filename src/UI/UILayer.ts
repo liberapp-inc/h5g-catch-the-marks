@@ -29,6 +29,16 @@ class UILayer extends GameObject{
             UILayer.pushFlag = false;
             PushMark.I.release();
         }
+        if(Bonus.bonusFlag){
+            Mark.mark.forEach(m => {
+                if(!m.circle){
+                    //スパゲティなので注意
+                    m.reverseShape(Game.width/3.0,Game.height/2,Game.width/26,Game.width/26, m.length,45,6,m.lineColor);
+
+                }
+
+            });
+        }
     }
 
     out(e : egret.TouchEvent){
