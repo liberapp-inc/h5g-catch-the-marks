@@ -104,7 +104,8 @@ var Util = (function () {
         shape.graphics.endFill();
         return shape;
     };
-    Util.setCircle = function (x, y, width, height, color, radius) {
+    Util.setCircle = function (x, y, width, height, color) {
+        var radius = width / 2;
         var shape = new egret.Shape();
         shape.x = x;
         shape.y = y;

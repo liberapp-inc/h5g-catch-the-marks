@@ -1,10 +1,8 @@
-class PushMark extends UICompornent{
+class PushMark extends GameCompornent{
 
     static I : PushMark = null;
     lineColor : number;
     expansion : boolean = true;
-    
-
 
     constructor(x: number, y: number, width : number, height : number, lineColor: number){
         super(x,y,width,height);
@@ -76,11 +74,7 @@ class PushMark extends UICompornent{
                 else{
                     m.isHit = false;
                 }
-/*                if(this.compornent.x <= m.compornent.x && this.compornent.x + this.compornent.width >= m.compornent.x ){
-                if(this.compornent.y <= m.compornent.y && this.compornent.y + this.compornent.height >= m.compornent.y ){
-                    m.isHit = true;
-                }
-                }*/
+
 
             });
         }

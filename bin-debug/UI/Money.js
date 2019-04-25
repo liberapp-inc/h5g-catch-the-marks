@@ -56,8 +56,8 @@ var DropMoney = (function (_super) {
         _this.text.textAlign = egret.HorizontalAlign.CENTER;
         _this.text.verticalAlign = egret.VerticalAlign.MIDDLE;
         display.addChild(_this.text);
-        MyTween.dropMoneyTextFadeOut(_this.text, _this);
         return _this;
+        //MyTween.dropMoneyTextFadeOut(this.text, this);
     }
     DropMoney.prototype.addDestroyMethod = function () {
         this.display.removeChild(this.text);

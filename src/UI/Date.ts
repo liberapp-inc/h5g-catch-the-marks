@@ -80,7 +80,7 @@ class CheckDate extends GameObject{
             CheckDate.timerCounter = 0;
 
             //AutoSaveTextの表示
-            MyTween.autoSaveTextFadeInOut(this.text);
+            //MyTween.autoSaveTextFadeInOut(this.text);
             
         }
     }

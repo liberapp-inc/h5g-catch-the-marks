@@ -42,19 +42,23 @@ var Game = (function () {
     Game.init = function () {
         this.height = egret.MainContext.instance.stage.stageHeight;
         this.width = egret.MainContext.instance.stage.stageWidth;
+        Mark.circleGeneratePos = [Game.width / 1.5, Game.height / 2];
+        Mark.crossGeneratePos = [Game.width / 3.0, Game.height / 2];
+        Mark.circleRadius = Game.width / 20;
+        Mark.crossWidth = Game.width / 26;
+        GameOver.gameOverFlag = false;
         /* new メソッドを記入*/
         new GameStage();
         new UILayer();
         new Background();
         new Score(0, 0, 0, 0, ColorPallet.BLACK);
         new Frame(Game.width / 12, Game.height / 9.5, Game.width / 1.2, Game.height / 1.2, ColorPallet.BLACK);
-        for (var i = 0; i < 10; i++) {
-            new Circle(Game.width / 1.5, Game.height / 2, Game.width / 20, Game.width / 20, ColorPallet.BLACK);
-            new Cross(Game.width / 3.0, Game.height / 2, Game.width / 26, Game.width / 26, ColorPallet.BLACK);
+        for (var i = 0; i < 1; i++) {
+            new Circle(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.BLACK);
+            new Cross(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, ColorPallet.BLACK);
         }
-        new Special(Game.width / 1.5, Game.height / 2, Game.width / 20, Game.width / 20, ColorPallet.RED);
+        new Special(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.RED);
         new PushMark(0, 0, Game.width, Game.width, ColorPallet.BLACK);
-        new Bonus(0, 0, 0, 0, ColorPallet.BLACK);
     };
     return Game;
 }());

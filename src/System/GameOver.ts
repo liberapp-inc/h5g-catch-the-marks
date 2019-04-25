@@ -1,43 +1,47 @@
-class GameOver extends GameObject{
+class GameOver extends UICompornent{
 
-    textGameOver:egret.TextField = null;
-    textScore:egret.TextField = null;
-    textColor : number = 0x00FF3B;
+    textGameOver:eui.Label = null;
+    textScore:eui.Label = null;
+    textColor : number = ColorPallet.BLACK;
+    static gameOverFlag : boolean = false;
 
-    constructor() {
-        super();
+    constructor(x : number, y : number, width : number, height : number) {
+        super(x,y,width,height);
+        GameOver.gameOverFlag = true;
 
-        this.textGameOver = Util.myText(Game.width/2, Game.height/2 - 50, "GAME OVER", 100, 0.5, this.textColor, true);
+        this.textGameOver = Util.myText(Game.width/2, Game.height/2 - 50, "GAME OVER", 80, 1, this.textColor, true);
         this.textGameOver.anchorOffsetX = this.textGameOver.width/2;
         this.textGameOver.anchorOffsetY = this.textGameOver.height/2;
-        GameObject.display.addChild( this.textGameOver );
+        this.compornent.addChild( this.textGameOver );
         
-        this.textScore = Util.myText(Game.width/2, Game.height/2 + 50, "SCORE : " + Score.I.score, 100, 0.5, this.textColor, true);
+        this.textScore = Util.myText(Game.width/2, Game.height/2 + 50, "SCORE : " + Score.I.score, 80, 1, this.textColor, true);
         this.textScore.anchorOffsetX = this.textScore.width/2;
         this.textScore.anchorOffsetY = this.textScore.height/2;
-        GameObject.display.addChild( this.textScore );
+        this.compornent.addChild( this.textScore );
 
         if( Score.I.score >= Score.I.bestScore ){
-            window.localStorage.setItem("bestScore", Score.I.score.toFixed() ); // string
+            Util.saveLocalStrage("bestScore",Score.I.score);
+            //window.localStorage.setItem("bestScore", Score.I.score.toFixed() ); // string
         }
-
-        GameObject.display.once(egret.TouchEvent.TOUCH_TAP, (e: egret.TouchEvent) => this.tap(e), this);
+        UILayer.display.once(egret.TouchEvent.TOUCH_TAP, (e: egret.TouchEvent) => this.tap(e), this);
     }
 
-    onDestroy() {
-        GameObject.display.removeChild( this.textGameOver );
+    addDestroyMethod() {
+        if(this.compornent){
+            this.compornent.removeChildren();
+        }
+/*        this.compornent.removeChild( this.textGameOver );
+        this.compornent.removeChild( this.textScore );*/
         this.textGameOver = null;
-        GameObject.display.removeChild( this.textScore );
         this.textScore = null;
     }
     
     updateContent() {
-        GameObject.display.addChild( this.textGameOver );
-        GameObject.display.addChild( this.textScore );
 
      }
 
     tap(e:egret.TouchEvent){
+        GameOver.gameOverFlag = false;
         GameObject.transit = Game.init;
         this.destroy();
     }

@@ -10,40 +10,45 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var GameOver = (function (_super) {
     __extends(GameOver, _super);
-    function GameOver() {
-        var _this = _super.call(this) || this;
+    function GameOver(x, y, width, height) {
+        var _this = _super.call(this, x, y, width, height) || this;
         _this.textGameOver = null;
         _this.textScore = null;
-        _this.textColor = 0x00FF3B;
-        _this.textGameOver = Util.myText(Game.width / 2, Game.height / 2 - 50, "GAME OVER", 100, 0.5, _this.textColor, true);
+        _this.textColor = ColorPallet.BLACK;
+        GameOver.gameOverFlag = true;
+        _this.textGameOver = Util.myText(Game.width / 2, Game.height / 2 - 50, "GAME OVER", 80, 1, _this.textColor, true);
         _this.textGameOver.anchorOffsetX = _this.textGameOver.width / 2;
         _this.textGameOver.anchorOffsetY = _this.textGameOver.height / 2;
-        GameObject.display.addChild(_this.textGameOver);
-        _this.textScore = Util.myText(Game.width / 2, Game.height / 2 + 50, "SCORE : " + Score.I.score, 100, 0.5, _this.textColor, true);
+        _this.compornent.addChild(_this.textGameOver);
+        _this.textScore = Util.myText(Game.width / 2, Game.height / 2 + 50, "SCORE : " + Score.I.score, 80, 1, _this.textColor, true);
         _this.textScore.anchorOffsetX = _this.textScore.width / 2;
         _this.textScore.anchorOffsetY = _this.textScore.height / 2;
-        GameObject.display.addChild(_this.textScore);
+        _this.compornent.addChild(_this.textScore);
         if (Score.I.score >= Score.I.bestScore) {
-            window.localStorage.setItem("bestScore", Score.I.score.toFixed()); // string
+            Util.saveLocalStrage("bestScore", Score.I.score);
+            //window.localStorage.setItem("bestScore", Score.I.score.toFixed() ); // string
         }
-        GameObject.display.once(egret.TouchEvent.TOUCH_TAP, function (e) { return _this.tap(e); }, _this);
+        UILayer.display.once(egret.TouchEvent.TOUCH_TAP, function (e) { return _this.tap(e); }, _this);
         return _this;
     }
-    GameOver.prototype.onDestroy = function () {
-        GameObject.display.removeChild(this.textGameOver);
+    GameOver.prototype.addDestroyMethod = function () {
+        if (this.compornent) {
+            this.compornent.removeChildren();
+        }
+        /*        this.compornent.removeChild( this.textGameOver );
+                this.compornent.removeChild( this.textScore );*/
         this.textGameOver = null;
-        GameObject.display.removeChild(this.textScore);
         this.textScore = null;
     };
     GameOver.prototype.updateContent = function () {
-        GameObject.display.addChild(this.textGameOver);
-        GameObject.display.addChild(this.textScore);
     };
     GameOver.prototype.tap = function (e) {
+        GameOver.gameOverFlag = false;
         GameObject.transit = Game.init;
         this.destroy();
     };
+    GameOver.gameOverFlag = false;
     return GameOver;
-}(GameObject));
+}(UICompornent));
 __reflect(GameOver.prototype, "GameOver");
 //# sourceMappingURL=GameOver.js.map

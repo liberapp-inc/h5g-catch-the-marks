@@ -41,6 +41,7 @@ var Mark = (function (_super) {
         this.shapes.push(shape);
         this.shapes.push(shape2);
     };
+    //SPアイテムを取得した時に×マークを〇にする
     Mark.prototype.changeShape = function (radius) {
         this.shapes = [];
         this.compornent.removeChildren();
@@ -69,7 +70,17 @@ var Mark = (function (_super) {
     };
     Mark.prototype.checkHit = function () {
         if (this.isHit) {
-            this.destroy();
+            if (this.circle) {
+                this.destroy();
+            }
+            else if (Bonus.bonusFlag && !this.circle) {
+                this.destroy();
+            }
+            else if (!this.circle) {
+                if (!GameOver.gameOverFlag)
+                    //GameObject.transit = Game.init;
+                    new GameOver(0, 0, 0, 0);
+            }
         }
     };
     Mark.prototype.reflect = function () {
@@ -81,12 +92,13 @@ var Mark = (function (_super) {
         }
     };
     Mark.prototype.updateContent = function () {
-        if (this.isHit && !UILayer.pushFlag) {
-            this.destroy();
+        if (!GameOver.gameOverFlag) {
+            if (!UILayer.pushFlag) {
+                this.checkHit();
+            }
+            this.move();
+            this.reflect();
         }
-        this.move();
-        this.reflect();
-        //this.checkHit();
     };
     Mark.moveSpeed = 2;
     Mark.mark = [];
@@ -135,26 +147,13 @@ var Special = (function (_super) {
         GameStage.display.addChild(this.compornent);
         this.shapes.push(shape);
     };
-    /*    changeShape(radius:number) : egret.Shape{
-            const shape : egret.Shape = new egret.Shape();
-            shape.graphics.lineStyle(6,this.lineColor);
-            shape.graphics.drawCircle(0, 0, radius);
-            return shape;
-        }*/
     Special.prototype.addDestroyMethod = function () {
         var _this = this;
-        Bonus.bonusFlag = true;
+        new Bonus(0, 0, 0, 0);
         Mark.mark.forEach(function (m) {
             if (m.compornent && !m.circle) {
                 m.changeShape(_this.radius);
-                /*                m.shapes = [];
-                                m.compornent.removeChildren();
-                                const s : egret.Shape = this.changeShape(this.radius);
-                                m.shapes.push(s);
-                                m.compornent.addChild(s);*/
             }
-            /*            m.shapes.forEach(s =>{
-                        });*/
         });
     };
     return Special;

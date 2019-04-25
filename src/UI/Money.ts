@@ -60,7 +60,7 @@ class DropMoney extends GameObject{
         this.text.textAlign = egret.HorizontalAlign.CENTER;
         this.text.verticalAlign = egret.VerticalAlign.MIDDLE;
         display.addChild( this.text );
-        MyTween.dropMoneyTextFadeOut(this.text, this);
+        //MyTween.dropMoneyTextFadeOut(this.text, this);
     }
     
     addDestroyMethod(){

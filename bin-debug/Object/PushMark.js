@@ -71,11 +71,6 @@ var PushMark = (function (_super) {
                 else {
                     m.isHit = false;
                 }
-                /*                if(this.compornent.x <= m.compornent.x && this.compornent.x + this.compornent.width >= m.compornent.x ){
-                                if(this.compornent.y <= m.compornent.y && this.compornent.y + this.compornent.height >= m.compornent.y ){
-                                    m.isHit = true;
-                                }
-                                }*/
             });
         }
     };
@@ -85,6 +80,6 @@ var PushMark = (function (_super) {
     };
     PushMark.I = null;
     return PushMark;
-}(UICompornent));
+}(GameCompornent));
 __reflect(PushMark.prototype, "PushMark");
 //# sourceMappingURL=PushMark.js.map

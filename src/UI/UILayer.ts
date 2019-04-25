@@ -1,12 +1,12 @@
 //UIコンポーネントを描画するレイヤー
-class UILayer extends GameObject{
+class UILayer {
 
     static display: eui.UILayer = null;
     static index :number;
     static pushFlag : boolean = false;
 
     constructor(){
-        super();
+        //super();
         this.setContainer();
         UILayer.index = GameObject.display.getChildIndex(UILayer.display) ;
         UILayer.display.addEventListener( egret.TouchEvent.TOUCH_BEGIN, this.push, this );
@@ -21,28 +21,27 @@ class UILayer extends GameObject{
     }
 
     push(e : egret.TouchEvent){
-        if(e.touchDown){
-            UILayer.pushFlag = true;
-            PushMark.I.push(e.stageX, e.stageY);
-        }
-        else{
-            UILayer.pushFlag = false;
-            PushMark.I.release();
-        }
-        if(Bonus.bonusFlag){
-            Mark.mark.forEach(m => {
-                if(!m.circle){
-                    //スパゲティなので注意
-                    m.reverseShape(Game.width/3.0,Game.height/2,Game.width/26,Game.width/26, m.length,45,6,m.lineColor);
+        if(!GameOver.gameOverFlag){
 
-                }
+            if(e.touchDown){
+                UILayer.pushFlag = true;
+                PushMark.I.push(e.stageX, e.stageY);
+                //GameObject.transit = Game.init;
 
-            });
+            }
+            else{
+                UILayer.pushFlag = false;
+                PushMark.I.release();
+            }
         }
+
     }
 
     out(e : egret.TouchEvent){
-        UILayer.pushFlag = false;
+        if(!GameOver.gameOverFlag){
+            UILayer.pushFlag = false;
+
+        }
     }
 
 

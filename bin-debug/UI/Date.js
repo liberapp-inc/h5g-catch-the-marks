@@ -70,7 +70,7 @@ var CheckDate = (function (_super) {
             window.localStorage.setItem("getLastDate", getLastDate);
             CheckDate.timerCounter = 0;
             //AutoSaveTextの表示
-            MyTween.autoSaveTextFadeInOut(this.text);
+            //MyTween.autoSaveTextFadeInOut(this.text);
         }
     };
     CheckDate.I = null;

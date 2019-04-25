@@ -125,8 +125,8 @@ class Util{
         return shape;
     }
 
-    static setCircle(x : number, y : number, width : number, height : number, color:number, radius:number):egret.Shape{
-
+    static setCircle(x : number, y : number, width : number, height : number, color:number):egret.Shape{
+        let radius :number = width/2;
         const shape:egret.Shape = new egret.Shape();
         shape.x = x;
         shape.y = y;
