@@ -8,7 +8,7 @@ var UILayer = (function () {
         this.setContainer();
         UILayer.index = GameObject.display.getChildIndex(UILayer.display);
         UILayer.display.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.push, this);
-        //UILayer.display.addEventListener( egret.TouchEvent.TOUCH_MOVE, this.push, this );
+        UILayer.display.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.move, this);
         UILayer.display.addEventListener(egret.TouchEvent.TOUCH_END, this.push, this);
         UILayer.display.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.out, this);
     }
@@ -28,6 +28,18 @@ var UILayer = (function () {
             }
         }
     };
+    UILayer.prototype.move = function (e) {
+        if (!GameOver.gameOverFlag) {
+            if (e.touchDown) {
+                UILayer.pushFlag = true;
+                PushMark.I.move(e.stageX, e.stageY);
+            }
+            else {
+                UILayer.pushFlag = false;
+                PushMark.I.release();
+            }
+        }
+    };
     UILayer.prototype.out = function (e) {
         if (!GameOver.gameOverFlag) {
             UILayer.pushFlag = false;
@@ -37,7 +49,7 @@ var UILayer = (function () {
         if (UILayer.display) {
             UILayer.display.removeChildren();
             UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.push, this);
-            //UILayer.display.removeEventListener( egret.TouchEvent.TOUCH_MOVE, this.push, this );
+            UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.move, this);
             UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_END, this.push, this);
             UILayer.display.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.push, this);
             GameObject.display.removeChild(UILayer.display);

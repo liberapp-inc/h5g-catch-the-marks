@@ -6,12 +6,12 @@ var GameScene = (function () {
     }
     GameScene.create = function () {
         GameScene.nowGenerate = true;
-        var newArray = Mark.mark.filter(function (obj) { return obj.destroyFlag !== true; });
-        Mark.mark = newArray;
+        /*        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
+                Mark.mark = newArray;*/
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
-        var specialGenerate = 100; //Util.randomInt(0,100);
-        if (specialGenerate >= 65) {
+        var specialGenerate = Util.randomInt(0, 100);
+        if (specialGenerate >= 45) {
             new Special(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.RED);
         }
         for (var i = 0; i < GameScene.stageLevel + 10; i++) {
@@ -22,9 +22,9 @@ var GameScene = (function () {
             }
             else if (i == 1) {
                 var a = new Cross(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, ColorPallet.BLACK);
-                if (Bonus.bonusFlag) {
-                    a.changeShape(Mark.circleRadius, ColorPallet.BLACK, false, 6);
-                }
+                /*                if(Bonus.bonusFlag){
+                                    a.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
+                                }*/
             }
             else if (probability <= GameScene.circleRate) {
                 new Circle(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.BLACK);
@@ -32,12 +32,17 @@ var GameScene = (function () {
             }
             else if (probability > GameScene.circleRate) {
                 var b = new Cross(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, ColorPallet.BLACK);
-                if (Bonus.bonusFlag) {
-                    console.log("b");
-                    b.changeShape(Mark.circleRadius, ColorPallet.BLACK, false, 6);
-                }
+                /*                if(Bonus.bonusFlag){
+                                    b.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
+                                }*/
             }
         }
+        Mark.mark.forEach(function (m) {
+            if (!m.circle && !m.special) {
+                m.reverseShape(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, m.length, 45, 6, ColorPallet.BLACK);
+                //egret.Tween.removeTweens(m.compornent);
+            }
+        });
         GameScene.nowGenerate = false;
     };
     GameScene.stageLevel = 1;

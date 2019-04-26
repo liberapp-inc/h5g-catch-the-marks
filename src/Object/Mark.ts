@@ -82,6 +82,18 @@ class Mark extends GameCompornent{
             if(this.special){
                 this.destroy();
             }
+            else if(Bonus.bonusFlag && !this.circle){
+                this.destroy();
+            }
+            else if(!this.circle && !this.special){
+                if(!GameOver.gameOverFlag){
+                    console.log("x" +this.compornent.x +"y" +this.compornent.y);
+                    if(!GameScene.nowGenerate){
+                        new GameOver(0,0,0,0);
+
+                    }
+                }
+            }
             else if(this.circle && !this.special){
                 this.destroy();
                 GameScene.catchCircle += 1;
@@ -97,18 +109,6 @@ class Mark extends GameCompornent{
                     if(Mark.moveSpeed < 10) {Mark.moveSpeed  += 0.1;}
                     if(GameScene.circleRate > 70){GameScene.circleRate -=0.1;}                   
                     GameScene.create();
-                }
-            }
-            else if(Bonus.bonusFlag && !this.circle){
-                this.destroy();
-            }
-            else if(!this.circle){
-                if(!GameOver.gameOverFlag){
-                    console.log("x" +this.compornent.x +"y" +this.compornent.y);
-                    if(!GameScene.nowGenerate){
-                        new GameOver(0,0,0,0);
-
-                    }
                 }
             }
         }

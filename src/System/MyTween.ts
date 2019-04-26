@@ -12,7 +12,7 @@ class MyTween {
                 if(count == repeat){
                     objectClass.reverseShape(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, objectClass.length,45,6,objectClass.lineColor);
                     egret.Tween.removeTweens(object);
-                    //Bonus.bonusFlag =false;
+                    Bonus.bonusFlag =false;
 
                 }                
             });

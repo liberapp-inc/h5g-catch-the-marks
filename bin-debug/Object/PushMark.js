@@ -38,6 +38,10 @@ var PushMark = (function (_super) {
         this.compornent.x = x;
         this.compornent.y = y;
     };
+    PushMark.prototype.move = function (x, y) {
+        this.compornent.x = x;
+        this.compornent.y = y;
+    };
     PushMark.prototype.release = function () {
         this.expansion = true;
         this.compornent.scaleX = this.compornent.scaleY = 0;

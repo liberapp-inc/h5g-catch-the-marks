@@ -46,6 +46,7 @@ var Game = (function () {
         Mark.crossGeneratePos = [Game.width / 3.0, Game.height / 2];
         Mark.circleRadius = Game.width / 20;
         Mark.crossWidth = Game.width / 26;
+        Mark.moveSpeed = 2;
         GameOver.gameOverFlag = false;
         GameScene.stageLevel = 1;
         /* new メソッドを記入*/

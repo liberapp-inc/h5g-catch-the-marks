@@ -5,19 +5,19 @@ class GameScene {
     static catchCircle : number = 0;//捕まえたcircle数
     static nowGenerate : boolean = false;//create中にisHitの判定が残っていることがあるのでその防止用
 
-    static create(){
+     static create(){
 
         GameScene.nowGenerate = true;
 
-        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
-        Mark.mark = newArray;
+/*        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
+        Mark.mark = newArray;*/
 
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
 
 
-        let specialGenerate : number = 100;//Util.randomInt(0,100);
-        if(specialGenerate >= 65){
+        let specialGenerate : number = Util.randomInt(0,100);
+        if(specialGenerate >= 45){
             new Special(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.RED);
         }
 
@@ -29,9 +29,9 @@ class GameScene {
             }
             else if(i == 1){
                 let a = new Cross(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, ColorPallet.BLACK);
-                if(Bonus.bonusFlag){
+/*                if(Bonus.bonusFlag){
                     a.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
-                }
+                }*/
 
             }
             else if(probability <= GameScene.circleRate){
@@ -40,15 +40,19 @@ class GameScene {
             }
             else if(probability > GameScene.circleRate){
                 let b : Cross = new Cross(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, ColorPallet.BLACK);
-                if(Bonus.bonusFlag){
-                    console.log("b");
-                    
+/*                if(Bonus.bonusFlag){
                     b.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
-                }
+                }*/
             }
 
         }
+        Mark.mark.forEach(m =>{
+            if(!m.circle && !m.special){
+                m.reverseShape(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, m.length,45,6,ColorPallet.BLACK);
+                //egret.Tween.removeTweens(m.compornent);
 
+            }
+        });
         GameScene.nowGenerate = false;
     }
 }

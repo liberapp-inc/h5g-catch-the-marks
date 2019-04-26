@@ -68,6 +68,17 @@ var Mark = (function (_super) {
             if (this.special) {
                 this.destroy();
             }
+            else if (Bonus.bonusFlag && !this.circle) {
+                this.destroy();
+            }
+            else if (!this.circle && !this.special) {
+                if (!GameOver.gameOverFlag) {
+                    console.log("x" + this.compornent.x + "y" + this.compornent.y);
+                    if (!GameScene.nowGenerate) {
+                        new GameOver(0, 0, 0, 0);
+                    }
+                }
+            }
             else if (this.circle && !this.special) {
                 this.destroy();
                 GameScene.catchCircle += 1;
@@ -87,17 +98,6 @@ var Mark = (function (_super) {
                         GameScene.circleRate -= 0.1;
                     }
                     GameScene.create();
-                }
-            }
-            else if (Bonus.bonusFlag && !this.circle) {
-                this.destroy();
-            }
-            else if (!this.circle) {
-                if (!GameOver.gameOverFlag) {
-                    console.log("x" + this.compornent.x + "y" + this.compornent.y);
-                    if (!GameScene.nowGenerate) {
-                        new GameOver(0, 0, 0, 0);
-                    }
                 }
             }
         }

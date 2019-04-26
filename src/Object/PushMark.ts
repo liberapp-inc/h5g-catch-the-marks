@@ -39,6 +39,11 @@ class PushMark extends GameCompornent{
 
     }
 
+    move(x:number, y:number){
+        this.compornent.x = x;
+        this.compornent.y = y;
+
+    }
     release(){
         this.expansion = true;
         this.compornent.scaleX = this.compornent.scaleY = 0;
