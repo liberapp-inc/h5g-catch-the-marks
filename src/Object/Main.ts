@@ -49,11 +49,12 @@ class Game{
         new Background();
         new Score(0,0,0,0, ColorPallet.BLACK);
         new Frame(Game.width/12,Game.height/9.5,Game.width/1.2,Game.height/1.2, ColorPallet.BLACK);
-        for(let i = 0; i < 1; i++){
+        GameScene.create();
+/*        for(let i = 0; i < 20; i++){
         new Circle(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.BLACK);
         new Cross(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, ColorPallet.BLACK);
         }
-        new Special(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.RED);
+        new Special(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.RED);*/
         new PushMark(0,0,Game.width,Game.width,ColorPallet.BLACK);
 
         

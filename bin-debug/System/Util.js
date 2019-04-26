@@ -71,6 +71,7 @@ var Util = (function () {
     };
     Util.saveLocalStrage = function (key, saveValue) {
         window.localStorage.setItem(key, saveValue.toString());
+        console.log(saveValue);
     };
     Util.loadLocalStrage = function (key, initialValue) {
         var stringValue = window.localStorage.getItem(key); // string
@@ -104,14 +105,20 @@ var Util = (function () {
         shape.graphics.endFill();
         return shape;
     };
-    Util.setCircle = function (x, y, width, height, color) {
+    Util.setCircle = function (x, y, width, color, fill, lineWidth) {
         var radius = width / 2;
         var shape = new egret.Shape();
         shape.x = x;
         shape.y = y;
-        shape.graphics.beginFill(color);
-        shape.graphics.drawCircle(0, 0, radius);
-        shape.graphics.endFill();
+        if (fill) {
+            shape.graphics.beginFill(color);
+            shape.graphics.drawCircle(0, 0, radius);
+            shape.graphics.endFill();
+        }
+        else {
+            shape.graphics.lineStyle(lineWidth, color);
+            shape.graphics.drawCircle(0, 0, radius);
+        }
         return shape;
     };
     Util.setLine = function (x, y, length, degree, lineWidth, color) {

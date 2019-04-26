@@ -5,6 +5,7 @@ class Bonus extends UICompornent{
 
     constructor(x : number, y : number, width : number, height : number){
         super(x,y,width,height);
+        this.count = 0;
         Bonus.bonusFlag = true;
         Bonus.timer = new egret.Timer(1000,0);
         Bonus.timer.addEventListener(egret.TimerEvent.TIMER, this.timeMethod,this);
@@ -29,13 +30,16 @@ class Bonus extends UICompornent{
                 }
             });
         }
+        //Bonus.bonusFlag =false;
         this.count = 0;
         this.destroy();
     }
+    
 
     addDestroyMethod() {
         Bonus.timer.stop();
         Bonus.timer.removeEventListener(egret.TimerEvent.TIMER,this.timeMethod,this);
+        Bonus.bonusFlag =false;
 
     }
     updateContent(){}

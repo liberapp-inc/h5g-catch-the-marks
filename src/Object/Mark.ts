@@ -1,13 +1,14 @@
 class Mark extends GameCompornent{
 
+    static mark : Mark[]=[];
     radius : number;
     lineColor : number;
     length : number;
     isHit :boolean = false;
-    static moveSpeed : number = 2;
+    static moveSpeed : number = 4;
     moveVector : number[] = [];
-    static mark : Mark[]=[];
     circle : boolean = false;
+    special : boolean = false;
     static circleGeneratePos : number[];
     static crossGeneratePos  : number[];
     static circleRadius : number ;
@@ -24,12 +25,8 @@ class Mark extends GameCompornent{
 
     }
 
-    setCircleShape(x : number, y : number, radius:number){
-        const shape:egret.Shape = new egret.Shape();
-/*        shape.x = x;
-        shape.y = y;*/
-        shape.graphics.lineStyle(6,this.lineColor);
-        shape.graphics.drawCircle(0, 0, radius);
+    setCircleShape(x : number, y : number, width:number,color:number, fill : boolean, lineWidth: number){
+        const shape:egret.Shape = Util.setCircle(x,y,width,color,fill,lineWidth);
         this.compornent.addChild(shape);
         GameStage.display.addChild(this.compornent);
         this.shapes.push(shape);
@@ -48,12 +45,13 @@ class Mark extends GameCompornent{
     }
 
     //SPアイテムを取得した時に×マークを〇にする
-    changeShape(radius:number) {
+    changeShape(width:number,color:number, fill : boolean, lineWidth: number) {
         this.shapes = [];
         this.compornent.removeChildren();
-        const shape : egret.Shape = new egret.Shape();
+        const shape : egret.Shape = Util.setCircle(0,0,width,color,fill,lineWidth);
+/*        const shape : egret.Shape = new egret.Shape();
         shape.graphics.lineStyle(6,this.lineColor);
-        shape.graphics.drawCircle(0, 0, radius);
+        shape.graphics.drawCircle(0, 0, radius);*/
         this.compornent.addChild(shape);
         this.shapes.push(shape);
 
@@ -84,8 +82,17 @@ class Mark extends GameCompornent{
 
     checkHit(){
         if(this.isHit){
-            if(this.circle){
+            if(this.special){
                 this.destroy();
+            }
+            else if(this.circle && !this.special){
+                this.destroy();
+                GameScene.catchCircle += 1;
+                Score.I.score += 1;
+                if(GameScene.circleNumber == GameScene.catchCircle){
+                    GameScene.stageLevel += 1;                   
+                    GameScene.create();
+                }
             }
             else if(Bonus.bonusFlag && !this.circle){
                 this.destroy();
@@ -128,7 +135,7 @@ class Circle extends Mark{
     constructor(x : number, y : number, width : number, height : number, lineColor:number){
         super(x,y,width,height,lineColor);
         this.circle = true;
-        this.setCircleShape(x,y,width/2);
+        this.setCircleShape(0,0,width,this.lineColor,false,6);
     }
 }
 
@@ -138,16 +145,19 @@ class Cross extends Mark{
         super(x,y,width,height,lineColor);
         this.circle = false;
         this.setCrossShape(x,y,width,height,this.length,45,6,lineColor);
+        
     }
 }
 
 class Special extends Mark{
+
 
     constructor(x : number, y : number, width : number, height : number, lineColor:number){
         super(x,y,width,height,lineColor);
         this.lineColor = lineColor;
         this.radius = width/2;
         this.circle = true;
+        this.special = true;
         this.setCircleShape(x,y,width/2);
     }
 
@@ -164,10 +174,13 @@ class Special extends Mark{
 
 
     addDestroyMethod(){
-        new Bonus(0,0,0,0);
+        if(!GameOver.gameOverFlag){
+            new Bonus(0,0,0,0);
+
+        }
         Mark.mark.forEach(m => {
             if(m.compornent && !m.circle){
-                m.changeShape(this.radius);
+                m.changeShape(this.compornent.width,ColorPallet.BLACK,false,6);
             }
 
         });

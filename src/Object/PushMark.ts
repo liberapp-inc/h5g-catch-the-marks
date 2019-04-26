@@ -20,12 +20,14 @@ class PushMark extends GameCompornent{
         this.compornent.addChild(shape);
         GameStage.display.addChild(this.compornent);
         this.shapes.push(shape);
+
         
     }
 
     adjustmentCompornent(){
         this.compornent.anchorOffsetX += this.compornent.width/2;
         this.compornent.anchorOffsetY += this.compornent.height/2;
+        this.compornent.scaleX = this.compornent.scaleY = 0;
 /*        let s = Util.setRect(0,0,this.compornent.width, this.compornent.height, 0xff0000, 0);
         this.compornent.addChild(s);*/
     }
@@ -56,10 +58,10 @@ class PushMark extends GameCompornent{
             }
 
             if(this.expansion){
-                this.compornent.scaleX = this.compornent.scaleY += 0.005;
+                this.compornent.scaleX = this.compornent.scaleY += 0.01;
             }
             else{
-                this.compornent.scaleX = this.compornent.scaleY -= 0.005;
+                this.compornent.scaleX = this.compornent.scaleY -= 0.01;
             }
         }
             

@@ -45,4 +45,5 @@ class GameOver extends UICompornent{
         GameObject.transit = Game.init;
         this.destroy();
     }
+    
 }

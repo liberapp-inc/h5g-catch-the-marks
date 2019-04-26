@@ -41,7 +41,8 @@ var Score = (function (_super) {
     Score.prototype.updateContent = function () {
         this.text.text = "SCORE : " + this.score.toFixed();
         if (this.bestScore < this.score) {
-            this.textBest.text = "BEST : " + this.score.toFixed();
+            this.bestScore = this.score;
+            this.textBest.text = "BEST : " + this.bestScore.toFixed();
             Util.saveLocalStrage("Score.I.bestScore", Score.I.bestScore);
         }
     };

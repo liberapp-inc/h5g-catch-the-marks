@@ -86,6 +86,8 @@ class Util{
 
     static saveLocalStrage(key :string, saveValue : number){
         window.localStorage.setItem(key, saveValue.toString());
+                console.log(saveValue);
+
     }
 
     static loadLocalStrage(key : string, initialValue : number):number{
@@ -125,14 +127,21 @@ class Util{
         return shape;
     }
 
-    static setCircle(x : number, y : number, width : number, height : number, color:number):egret.Shape{
+    static setCircle(x : number, y : number, width : number, color:number, fill : boolean, lineWidth?: number):egret.Shape{
         let radius :number = width/2;
         const shape:egret.Shape = new egret.Shape();
         shape.x = x;
         shape.y = y;
-        shape.graphics.beginFill(color);
-        shape.graphics.drawCircle(0, 0, radius);
-        shape.graphics.endFill();
+        if(fill){
+            shape.graphics.beginFill(color);
+            shape.graphics.drawCircle(0, 0, radius);
+            shape.graphics.endFill();
+
+        }
+        else{
+            shape.graphics.lineStyle(lineWidth,color);
+            shape.graphics.drawCircle(0, 0, radius);
+        }
         return shape;
     }
 
@@ -147,6 +156,7 @@ class Util{
         shape.graphics.lineTo(length*Math.cos(rad), length*Math.sin(rad));
         return shape;
     }
+
 
     static remove(display : egret.DisplayObjectContainer, removeObject : egret.DisplayObject){
         if(display){

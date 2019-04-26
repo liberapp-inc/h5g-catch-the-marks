@@ -13,6 +13,7 @@ var Bonus = (function (_super) {
     function Bonus(x, y, width, height) {
         var _this = _super.call(this, x, y, width, height) || this;
         _this.count = 0;
+        _this.count = 0;
         Bonus.bonusFlag = true;
         Bonus.timer = new egret.Timer(1000, 0);
         Bonus.timer.addEventListener(egret.TimerEvent.TIMER, _this.timeMethod, _this);
@@ -36,12 +37,14 @@ var Bonus = (function (_super) {
                 }
             });
         }
+        //Bonus.bonusFlag =false;
         this.count = 0;
         this.destroy();
     };
     Bonus.prototype.addDestroyMethod = function () {
         Bonus.timer.stop();
         Bonus.timer.removeEventListener(egret.TimerEvent.TIMER, this.timeMethod, this);
+        Bonus.bonusFlag = false;
     };
     Bonus.prototype.updateContent = function () { };
     Bonus.bonusFlag = false;

@@ -15,6 +15,7 @@ var Mark = (function (_super) {
         _this.isHit = false;
         _this.moveVector = [];
         _this.circle = false;
+        _this.special = false;
         _this.lineColor = lineColor;
         _this.length = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
         //this.setMoveVector(Mark.moveSpeed, 45);
@@ -22,12 +23,8 @@ var Mark = (function (_super) {
         Mark.mark.push(_this);
         return _this;
     }
-    Mark.prototype.setCircleShape = function (x, y, radius) {
-        var shape = new egret.Shape();
-        /*        shape.x = x;
-                shape.y = y;*/
-        shape.graphics.lineStyle(6, this.lineColor);
-        shape.graphics.drawCircle(0, 0, radius);
+    Mark.prototype.setCircleShape = function (x, y, width, color, fill, lineWidth) {
+        var shape = Util.setCircle(x, y, width, color, fill, lineWidth);
         this.compornent.addChild(shape);
         GameStage.display.addChild(this.compornent);
         this.shapes.push(shape);
@@ -42,12 +39,13 @@ var Mark = (function (_super) {
         this.shapes.push(shape2);
     };
     //SPアイテムを取得した時に×マークを〇にする
-    Mark.prototype.changeShape = function (radius) {
+    Mark.prototype.changeShape = function (width, color, fill, lineWidth) {
         this.shapes = [];
         this.compornent.removeChildren();
-        var shape = new egret.Shape();
-        shape.graphics.lineStyle(6, this.lineColor);
-        shape.graphics.drawCircle(0, 0, radius);
+        var shape = Util.setCircle(0, 0, width, color, fill, lineWidth);
+        /*        const shape : egret.Shape = new egret.Shape();
+                shape.graphics.lineStyle(6,this.lineColor);
+                shape.graphics.drawCircle(0, 0, radius);*/
         this.compornent.addChild(shape);
         this.shapes.push(shape);
     };
@@ -70,8 +68,17 @@ var Mark = (function (_super) {
     };
     Mark.prototype.checkHit = function () {
         if (this.isHit) {
-            if (this.circle) {
+            if (this.special) {
                 this.destroy();
+            }
+            else if (this.circle && !this.special) {
+                this.destroy();
+                GameScene.catchCircle += 1;
+                Score.I.score += 1;
+                if (GameScene.circleNumber == GameScene.catchCircle) {
+                    GameScene.stageLevel += 1;
+                    GameScene.create();
+                }
             }
             else if (Bonus.bonusFlag && !this.circle) {
                 this.destroy();
@@ -100,8 +107,8 @@ var Mark = (function (_super) {
             this.reflect();
         }
     };
-    Mark.moveSpeed = 2;
     Mark.mark = [];
+    Mark.moveSpeed = 4;
     return Mark;
 }(GameCompornent));
 __reflect(Mark.prototype, "Mark");
@@ -110,7 +117,7 @@ var Circle = (function (_super) {
     function Circle(x, y, width, height, lineColor) {
         var _this = _super.call(this, x, y, width, height, lineColor) || this;
         _this.circle = true;
-        _this.setCircleShape(x, y, width / 2);
+        _this.setCircleShape(0, 0, width, _this.lineColor, false, 6);
         return _this;
     }
     return Circle;
@@ -134,6 +141,7 @@ var Special = (function (_super) {
         _this.lineColor = lineColor;
         _this.radius = width / 2;
         _this.circle = true;
+        _this.special = true;
         _this.setCircleShape(x, y, width / 2);
         return _this;
     }
@@ -149,10 +157,12 @@ var Special = (function (_super) {
     };
     Special.prototype.addDestroyMethod = function () {
         var _this = this;
-        new Bonus(0, 0, 0, 0);
+        if (!GameOver.gameOverFlag) {
+            new Bonus(0, 0, 0, 0);
+        }
         Mark.mark.forEach(function (m) {
             if (m.compornent && !m.circle) {
-                m.changeShape(_this.radius);
+                m.changeShape(_this.compornent.width, ColorPallet.BLACK, false, 6);
             }
         });
     };

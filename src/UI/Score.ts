@@ -28,6 +28,7 @@ class Score extends UICompornent{
         this.bestScore = Util.loadLocalStrage("Score.I.bestScore",Score.I.bestScore);
         this.textBest = Util.myText(0, 50, "BEST : " + this.bestScore.toString(), 100, 0.5, this.textColor, true);
         this.compornent.addChild( this.textBest );
+        
     }
     
     addDestroyMethod() {
@@ -40,7 +41,8 @@ class Score extends UICompornent{
     updateContent() {
         this.text.text = "SCORE : " + this.score.toFixed();
         if( this.bestScore < this.score ){
-            this.textBest.text = "BEST : " + this.score.toFixed();
+            this.bestScore = this.score;
+            this.textBest.text = "BEST : " + this.bestScore.toFixed();
             Util.saveLocalStrage("Score.I.bestScore",Score.I.bestScore);
         }
     }

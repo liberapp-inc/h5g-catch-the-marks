@@ -31,6 +31,7 @@ var PushMark = (function (_super) {
     PushMark.prototype.adjustmentCompornent = function () {
         this.compornent.anchorOffsetX += this.compornent.width / 2;
         this.compornent.anchorOffsetY += this.compornent.height / 2;
+        this.compornent.scaleX = this.compornent.scaleY = 0;
         /*        let s = Util.setRect(0,0,this.compornent.width, this.compornent.height, 0xff0000, 0);
                 this.compornent.addChild(s);*/
     };
@@ -54,10 +55,10 @@ var PushMark = (function (_super) {
                 this.expansion = true;
             }
             if (this.expansion) {
-                this.compornent.scaleX = this.compornent.scaleY += 0.005;
+                this.compornent.scaleX = this.compornent.scaleY += 0.01;
             }
             else {
-                this.compornent.scaleX = this.compornent.scaleY -= 0.005;
+                this.compornent.scaleX = this.compornent.scaleY -= 0.01;
             }
         }
     };
