@@ -93,7 +93,10 @@ var Mark = (function (_super) {
             }
             else if (!this.circle) {
                 if (!GameOver.gameOverFlag) {
-                    new GameOver(0, 0, 0, 0);
+                    console.log("x" + this.compornent.x + "y" + this.compornent.y);
+                    if (!GameScene.nowGenerate) {
+                        new GameOver(0, 0, 0, 0);
+                    }
                 }
             }
         }
@@ -114,7 +117,7 @@ var Mark = (function (_super) {
             else {
                 //push中にバツにあたったらゲームオーバー
                 if (this.isHit && !this.circle && !Bonus.bonusFlag) {
-                    if (!GameOver.gameOverFlag) {
+                    if (!GameOver.gameOverFlag && !GameScene.nowGenerate) {
                         UILayer.pushFlag = false;
                         PushMark.I.release();
                         this.reverseShape(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, this.length, 45, 6, ColorPallet.BULE);

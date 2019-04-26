@@ -3,14 +3,18 @@ class GameScene {
     static circleRate : number = 80;
     static circleNumber : number = 0;//生成したcircle数
     static catchCircle : number = 0;//捕まえたcircle数
+    static nowGenerate : boolean = false;//create中にisHitの判定が残っていることがあるのでその防止用
 
     static create(){
+
+        GameScene.nowGenerate = true;
 
         const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
         Mark.mark = newArray;
 
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
+
 
         let specialGenerate : number = 100;//Util.randomInt(0,100);
         if(specialGenerate >= 65){
@@ -39,5 +43,6 @@ class GameScene {
 
         }
 
+        GameScene.nowGenerate = false;
     }
 }
