@@ -86,8 +86,6 @@ class Util{
 
     static saveLocalStrage(key :string, saveValue : number){
         window.localStorage.setItem(key, saveValue.toString());
-                console.log(saveValue);
-
     }
 
     static loadLocalStrage(key : string, initialValue : number):number{

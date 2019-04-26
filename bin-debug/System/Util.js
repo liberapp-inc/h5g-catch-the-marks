@@ -71,7 +71,6 @@ var Util = (function () {
     };
     Util.saveLocalStrage = function (key, saveValue) {
         window.localStorage.setItem(key, saveValue.toString());
-        console.log(saveValue);
     };
     Util.loadLocalStrage = function (key, initialValue) {
         var stringValue = window.localStorage.getItem(key); // string

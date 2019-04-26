@@ -1,4 +1,4 @@
-class Score extends UICompornent{
+class Level extends UICompornent{
 
     static I:Score = null;   // singleton instance
 
@@ -16,8 +16,8 @@ class Score extends UICompornent{
         this.textColor = color;
 
         Score.I = this;
-        this.score = 0;
-        this.text = Util.myText(0, 0, "SCORE : 0", 100, 0.5, this.textColor, true);
+        this.score = GameScene.stageLevel;
+        this.text = Util.myText(0, 0, "LEVEL : 0", 100, 0.5, this.textColor, true);
         this.compornent.addChild( this.text );
 
         this.bestScore = Util.loadLocalStrage("Score.I.bestScore",Score.I.bestScore);
@@ -34,11 +34,11 @@ class Score extends UICompornent{
     }
 
     updateContent() {
-        this.text.text = "SCORE : " + this.score.toFixed();
-        if( this.bestScore < this.score ){
-            this.bestScore = this.score;
+        this.text.text = "LEVEL : " + GameScene.stageLevel.toFixed();
+        if( this.bestScore < GameScene.stageLevel ){
+            this.bestScore = GameScene.stageLevel;
             this.textBest.text = "BEST : " + this.bestScore.toFixed();
-            Util.saveLocalStrage("Score.I.bestScore",Score.I.bestScore);
+            Util.saveLocalStrage("Score.I.bestScore",GameScene.stageLevel);
         }
     }
 

@@ -42,6 +42,7 @@ var PushMark = (function (_super) {
     };
     PushMark.prototype.release = function () {
         this.expansion = true;
+        this.compornent.x = this.compornent.y = 0;
         this.compornent.scaleX = this.compornent.scaleY = 0;
         var newArray = Mark.mark.filter(function (obj) { return obj.destroyFlag !== true; });
         Mark.mark = newArray;

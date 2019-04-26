@@ -5,7 +5,7 @@ class Mark extends GameCompornent{
     lineColor : number;
     length : number;
     isHit :boolean = false;
-    static moveSpeed : number = 4;
+    static moveSpeed : number = 2;
     moveVector : number[] = [];
     circle : boolean = false;
     special : boolean = false;
@@ -49,9 +49,6 @@ class Mark extends GameCompornent{
         this.shapes = [];
         this.compornent.removeChildren();
         const shape : egret.Shape = Util.setCircle(0,0,width,color,fill,lineWidth);
-/*        const shape : egret.Shape = new egret.Shape();
-        shape.graphics.lineStyle(6,this.lineColor);
-        shape.graphics.drawCircle(0, 0, radius);*/
         this.compornent.addChild(shape);
         this.shapes.push(shape);
 
@@ -88,9 +85,16 @@ class Mark extends GameCompornent{
             else if(this.circle && !this.special){
                 this.destroy();
                 GameScene.catchCircle += 1;
-                Score.I.score += 1;
+                //Score.I.score += 1;
                 if(GameScene.circleNumber == GameScene.catchCircle){
-                    GameScene.stageLevel += 1;                   
+                    if(Bonus.bonusFlag){
+                        Bonus.I.stopBonus();
+                    }
+                    //これがないと、大きな円で〇を消したとき、次のステージで生成された×や〇にhit判定が入ってしまう。
+                    PushMark.I.compornent.scaleX = PushMark.I.compornent.scaleY = 0;
+                    GameScene.stageLevel += 1;
+                    if(Mark.moveSpeed < 10) {Mark.moveSpeed  += 0.1;}
+                    if(GameScene.circleRate > 70){GameScene.circleRate -=0.1;}                   
                     GameScene.create();
                 }
             }
@@ -98,10 +102,9 @@ class Mark extends GameCompornent{
                 this.destroy();
             }
             else if(!this.circle){
-                if(!GameOver.gameOverFlag)
-                        //GameObject.transit = Game.init;
-
+                if(!GameOver.gameOverFlag){
                     new GameOver(0,0,0,0);
+                }
             }
         }
 
@@ -119,8 +122,19 @@ class Mark extends GameCompornent{
 
     updateContent(){
         if(!GameOver.gameOverFlag){
-            if(!UILayer.pushFlag){
+            if(!UILayer.pushFlag){//指を離したときにisHit =trueのマークを破壊
                 this.checkHit();
+            }
+            else{
+                //push中にバツにあたったらゲームオーバー
+                if(this.isHit && !this.circle && !Bonus.bonusFlag){
+                    if(!GameOver.gameOverFlag){
+                        UILayer.pushFlag = false;
+                        PushMark.I.release();
+                        this.reverseShape(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, this.length,45,6,ColorPallet.BULE);
+                        new GameOver(0,0,0,0);
+                    }
+                }
             }
             this.move();
             this.reflect();
@@ -175,7 +189,10 @@ class Special extends Mark{
 
     addDestroyMethod(){
         if(!GameOver.gameOverFlag){
-            new Bonus(0,0,0,0);
+            if(!Bonus.bonusFlag){
+                new Bonus(0,0,0,0);
+
+            }
 
         }
         Mark.mark.forEach(m => {

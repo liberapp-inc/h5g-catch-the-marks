@@ -20,23 +20,20 @@ var GameOver = (function (_super) {
         _this.textGameOver.anchorOffsetX = _this.textGameOver.width / 2;
         _this.textGameOver.anchorOffsetY = _this.textGameOver.height / 2;
         _this.compornent.addChild(_this.textGameOver);
-        _this.textScore = Util.myText(Game.width / 2, Game.height / 2 + 50, "SCORE : " + Score.I.score, 80, 1, _this.textColor, true);
+        _this.textScore = Util.myText(Game.width / 2, Game.height / 2 + 50, "LEVEL : " + GameScene.stageLevel, 80, 1, _this.textColor, true);
         _this.textScore.anchorOffsetX = _this.textScore.width / 2;
         _this.textScore.anchorOffsetY = _this.textScore.height / 2;
         _this.compornent.addChild(_this.textScore);
-        if (Score.I.score >= Score.I.bestScore) {
-            Util.saveLocalStrage("bestScore", Score.I.score);
-            //window.localStorage.setItem("bestScore", Score.I.score.toFixed() ); // string
-        }
-        UILayer.display.once(egret.TouchEvent.TOUCH_TAP, function (e) { return _this.tap(e); }, _this);
+        /*        if( Score.I.score >= Score.I.bestScore ){
+                    Util.saveLocalStrage("bestScore",Score.I.score);
+                }*/
+        UILayer.display.once(egret.TouchEvent.TOUCH_BEGIN, function (e) { return _this.tap(e); }, _this);
         return _this;
     }
     GameOver.prototype.addDestroyMethod = function () {
         if (this.compornent) {
             this.compornent.removeChildren();
         }
-        /*        this.compornent.removeChild( this.textGameOver );
-                this.compornent.removeChild( this.textScore );*/
         this.textGameOver = null;
         this.textScore = null;
     };

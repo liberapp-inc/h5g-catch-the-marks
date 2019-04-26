@@ -26,8 +26,6 @@ class UILayer {
             if(e.touchDown){
                 UILayer.pushFlag = true;
                 PushMark.I.push(e.stageX, e.stageY);
-                //GameObject.transit = Game.init;
-
             }
             else{
                 UILayer.pushFlag = false;

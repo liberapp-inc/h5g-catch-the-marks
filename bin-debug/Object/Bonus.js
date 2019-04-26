@@ -13,6 +13,7 @@ var Bonus = (function (_super) {
     function Bonus(x, y, width, height) {
         var _this = _super.call(this, x, y, width, height) || this;
         _this.count = 0;
+        Bonus.I = _this;
         _this.count = 0;
         Bonus.bonusFlag = true;
         Bonus.timer = new egret.Timer(1000, 0);
@@ -41,12 +42,26 @@ var Bonus = (function (_super) {
         this.count = 0;
         this.destroy();
     };
+    Bonus.prototype.stopBonus = function () {
+        if (Bonus.bonusFlag && !GameOver.gameOverFlag) {
+            Bonus.timer.stop();
+            Bonus.timer.removeEventListener(egret.TimerEvent.TIMER, this.timeMethod, this);
+            Mark.mark.forEach(function (m) {
+                if (!m.circle) {
+                    m.reverseShape(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, m.length, 45, 6, ColorPallet.BLACK);
+                    egret.Tween.removeTweens(m.compornent);
+                    Bonus.bonusFlag = false;
+                }
+            });
+        }
+    };
     Bonus.prototype.addDestroyMethod = function () {
         Bonus.timer.stop();
         Bonus.timer.removeEventListener(egret.TimerEvent.TIMER, this.timeMethod, this);
         Bonus.bonusFlag = false;
     };
     Bonus.prototype.updateContent = function () { };
+    Bonus.I = null;
     Bonus.bonusFlag = false;
     return Bonus;
 }(UICompornent));

@@ -42,6 +42,7 @@ class PushMark extends GameCompornent{
 
     release(){
         this.expansion = true;
+        this.compornent.x = this.compornent.y = 0;
         this.compornent.scaleX = this.compornent.scaleY = 0;
         const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
         Mark.mark = newArray;
@@ -71,7 +72,7 @@ class PushMark extends GameCompornent{
         if(UILayer.pushFlag){
             Mark.mark.forEach(m => {
                 if(this.compornent.hitTestPoint(m.compornent.x, m.compornent.y)){
-                    m.isHit = true;
+                    m.isHit = true;                   
                 }
                 else{
                     m.isHit = false;

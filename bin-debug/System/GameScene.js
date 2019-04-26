@@ -9,9 +9,9 @@ var GameScene = (function () {
         GameScene.catchCircle = 0;
         var specialGenerate = 100; //Util.randomInt(0,100);
         if (specialGenerate >= 65) {
-            new Special(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.BULE);
+            new Special(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.RED);
         }
-        for (var i = 0; i < GameScene.stageLevel; i++) {
+        for (var i = 0; i < GameScene.stageLevel + 10; i++) {
             var probability = Util.randomInt(0, 100);
             if (i == 0) {
                 new Circle(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.BLACK);
@@ -32,7 +32,7 @@ var GameScene = (function () {
             }
         }
     };
-    GameScene.stageLevel = 10;
+    GameScene.stageLevel = 1;
     GameScene.circleRate = 80;
     GameScene.circleNumber = 0; //生成したcircle数
     GameScene.catchCircle = 0; //捕まえたcircle数

@@ -43,9 +43,6 @@ var Mark = (function (_super) {
         this.shapes = [];
         this.compornent.removeChildren();
         var shape = Util.setCircle(0, 0, width, color, fill, lineWidth);
-        /*        const shape : egret.Shape = new egret.Shape();
-                shape.graphics.lineStyle(6,this.lineColor);
-                shape.graphics.drawCircle(0, 0, radius);*/
         this.compornent.addChild(shape);
         this.shapes.push(shape);
     };
@@ -74,9 +71,20 @@ var Mark = (function (_super) {
             else if (this.circle && !this.special) {
                 this.destroy();
                 GameScene.catchCircle += 1;
-                Score.I.score += 1;
+                //Score.I.score += 1;
                 if (GameScene.circleNumber == GameScene.catchCircle) {
+                    if (Bonus.bonusFlag) {
+                        Bonus.I.stopBonus();
+                    }
+                    //これがないと、大きな円で〇を消したとき、次のステージで生成された×や〇にhit判定が入ってしまう。
+                    PushMark.I.compornent.scaleX = PushMark.I.compornent.scaleY = 0;
                     GameScene.stageLevel += 1;
+                    if (Mark.moveSpeed < 10) {
+                        Mark.moveSpeed += 0.1;
+                    }
+                    if (GameScene.circleRate > 70) {
+                        GameScene.circleRate -= 0.1;
+                    }
                     GameScene.create();
                 }
             }
@@ -84,9 +92,9 @@ var Mark = (function (_super) {
                 this.destroy();
             }
             else if (!this.circle) {
-                if (!GameOver.gameOverFlag)
-                    //GameObject.transit = Game.init;
+                if (!GameOver.gameOverFlag) {
                     new GameOver(0, 0, 0, 0);
+                }
             }
         }
     };
@@ -103,12 +111,23 @@ var Mark = (function (_super) {
             if (!UILayer.pushFlag) {
                 this.checkHit();
             }
+            else {
+                //push中にバツにあたったらゲームオーバー
+                if (this.isHit && !this.circle && !Bonus.bonusFlag) {
+                    if (!GameOver.gameOverFlag) {
+                        UILayer.pushFlag = false;
+                        PushMark.I.release();
+                        this.reverseShape(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, this.length, 45, 6, ColorPallet.BULE);
+                        new GameOver(0, 0, 0, 0);
+                    }
+                }
+            }
             this.move();
             this.reflect();
         }
     };
     Mark.mark = [];
-    Mark.moveSpeed = 4;
+    Mark.moveSpeed = 2;
     return Mark;
 }(GameCompornent));
 __reflect(Mark.prototype, "Mark");
@@ -158,7 +177,9 @@ var Special = (function (_super) {
     Special.prototype.addDestroyMethod = function () {
         var _this = this;
         if (!GameOver.gameOverFlag) {
-            new Bonus(0, 0, 0, 0);
+            if (!Bonus.bonusFlag) {
+                new Bonus(0, 0, 0, 0);
+            }
         }
         Mark.mark.forEach(function (m) {
             if (m.compornent && !m.circle) {
