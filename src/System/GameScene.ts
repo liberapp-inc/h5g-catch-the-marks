@@ -9,8 +9,8 @@ class GameScene {
 
         GameScene.nowGenerate = true;
 
-        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
-        Mark.mark = newArray;
+/*        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
+        Mark.mark = newArray;*/
 
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;

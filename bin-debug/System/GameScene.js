@@ -6,8 +6,8 @@ var GameScene = (function () {
     }
     GameScene.create = function () {
         GameScene.nowGenerate = true;
-        var newArray = Mark.mark.filter(function (obj) { return obj.destroyFlag !== true; });
-        Mark.mark = newArray;
+        /*        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
+                Mark.mark = newArray;*/
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
         var specialGenerate = 100; //Util.randomInt(0,100);
@@ -15,9 +15,7 @@ var GameScene = (function () {
             new Special(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.RED);
         }
         for (var i = 0; i < GameScene.stageLevel + 10; i++) {
-            /*        Mark.circleGeneratePos[0] = Util.randomInt(Frame.I.compornent.x + 20, Frame.I.compornent.x + Frame.I.compornent.width - 20);
-                    Mark.circleGeneratePos[1] = Util.randomInt(Frame.I.compornent.y + 20, Frame.I.compornent.y + Frame.I.compornent.height - 20);
-            */ var probability = Util.randomInt(0, 100);
+            var probability = Util.randomInt(0, 100);
             if (i == 0) {
                 new Circle(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.BLACK);
                 GameScene.circleNumber += 1;

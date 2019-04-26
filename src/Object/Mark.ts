@@ -92,6 +92,7 @@ class Mark extends GameCompornent{
                     }
                     //これがないと、大きな円で〇を消したとき、次のステージで生成された×や〇にhit判定が入ってしまう。
                     PushMark.I.compornent.scaleX = PushMark.I.compornent.scaleY = 0;
+                    PushMark.I.compornent.x = PushMark.I.compornent.y = 0;
                     GameScene.stageLevel += 1;
                     if(Mark.moveSpeed < 10) {Mark.moveSpeed  += 0.1;}
                     if(GameScene.circleRate > 70){GameScene.circleRate -=0.1;}                   

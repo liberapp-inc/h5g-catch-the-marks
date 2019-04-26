@@ -28,8 +28,7 @@ class PushMark extends GameCompornent{
         this.compornent.anchorOffsetX += this.compornent.width/2;
         this.compornent.anchorOffsetY += this.compornent.height/2;
         this.compornent.scaleX = this.compornent.scaleY = 0;
-/*        let s = Util.setRect(0,0,this.compornent.width, this.compornent.height, 0xff0000, 0);
-        this.compornent.addChild(s);*/
+
     }
 
 
@@ -71,7 +70,7 @@ class PushMark extends GameCompornent{
     checkHit(){
         if(UILayer.pushFlag){
             Mark.mark.forEach(m => {
-                if(this.compornent.hitTestPoint(m.compornent.x, m.compornent.y)){
+                if(!GameScene.nowGenerate && this.compornent.hitTestPoint(m.compornent.x, m.compornent.y)){
                     m.isHit = true;                   
                 }
                 else{

@@ -32,8 +32,6 @@ var PushMark = (function (_super) {
         this.compornent.anchorOffsetX += this.compornent.width / 2;
         this.compornent.anchorOffsetY += this.compornent.height / 2;
         this.compornent.scaleX = this.compornent.scaleY = 0;
-        /*        let s = Util.setRect(0,0,this.compornent.width, this.compornent.height, 0xff0000, 0);
-                this.compornent.addChild(s);*/
     };
     PushMark.prototype.push = function (x, y) {
         this.compornent.scaleX = this.compornent.scaleY = 0.01;
@@ -67,7 +65,7 @@ var PushMark = (function (_super) {
         var _this = this;
         if (UILayer.pushFlag) {
             Mark.mark.forEach(function (m) {
-                if (_this.compornent.hitTestPoint(m.compornent.x, m.compornent.y)) {
+                if (!GameScene.nowGenerate && _this.compornent.hitTestPoint(m.compornent.x, m.compornent.y)) {
                     m.isHit = true;
                 }
                 else {
