@@ -5,6 +5,10 @@ class GameScene {
     static catchCircle : number = 0;//捕まえたcircle数
 
     static create(){
+
+        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
+        Mark.mark = newArray;
+
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
 

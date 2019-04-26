@@ -5,6 +5,8 @@ var GameScene = (function () {
     function GameScene() {
     }
     GameScene.create = function () {
+        var newArray = Mark.mark.filter(function (obj) { return obj.destroyFlag !== true; });
+        Mark.mark = newArray;
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
         var specialGenerate = 100; //Util.randomInt(0,100);
