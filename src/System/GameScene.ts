@@ -9,8 +9,8 @@ class GameScene {
 
         GameScene.nowGenerate = true;
 
-/*        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
-        Mark.mark = newArray;*/
+        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
+        Mark.mark = newArray;
 
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
@@ -28,16 +28,22 @@ class GameScene {
                 GameScene.circleNumber += 1;
             }
             else if(i == 1){
-                new Cross(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, ColorPallet.BLACK);
+                let a = new Cross(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, ColorPallet.BLACK);
+                if(Bonus.bonusFlag){
+                    a.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
+                }
+
             }
             else if(probability <= GameScene.circleRate){
                 new Circle(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.BLACK);
                 GameScene.circleNumber += 1;
             }
-            else{
-                let c : Cross = new Cross(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, ColorPallet.BLACK);
+            else if(probability > GameScene.circleRate){
+                let b : Cross = new Cross(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, ColorPallet.BLACK);
                 if(Bonus.bonusFlag){
-                    c.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
+                    console.log("b");
+                    
+                    b.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
                 }
             }
 

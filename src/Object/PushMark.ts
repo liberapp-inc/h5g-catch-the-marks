@@ -33,7 +33,7 @@ class PushMark extends GameCompornent{
 
 
     push(x:number, y:number){
-        this.compornent.scaleX = this.compornent.scaleY = 0.01;
+        this.compornent.scaleX = this.compornent.scaleY = 0.13;
         this.compornent.x = x;
         this.compornent.y = y;
 

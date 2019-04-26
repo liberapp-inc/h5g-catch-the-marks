@@ -45,7 +45,7 @@ class Bonus extends UICompornent{
                 if(!m.circle){
                     m.reverseShape(Mark.crossGeneratePos[0],Mark.crossGeneratePos[1],Mark.crossWidth,Mark.crossWidth, m.length,45,6,ColorPallet.BLACK);
                     egret.Tween.removeTweens(m.compornent);
-                    Bonus.bonusFlag =false;
+                    //Bonus.bonusFlag =false;
 
                 }
             });

@@ -71,10 +71,10 @@ var Mark = (function (_super) {
             else if (this.circle && !this.special) {
                 this.destroy();
                 GameScene.catchCircle += 1;
-                //Score.I.score += 1;
                 if (GameScene.circleNumber == GameScene.catchCircle) {
                     if (Bonus.bonusFlag) {
                         Bonus.I.stopBonus();
+                        Bonus.bonusFlag = false;
                     }
                     //これがないと、大きな円で〇を消したとき、次のステージで生成された×や〇にhit判定が入ってしまう。
                     PushMark.I.compornent.scaleX = PushMark.I.compornent.scaleY = 0;
@@ -186,7 +186,7 @@ var Special = (function (_super) {
             }
         }
         Mark.mark.forEach(function (m) {
-            if (m.compornent && !m.circle) {
+            if (m.compornent && !m.circle && Bonus.bonusFlag) {
                 m.changeShape(_this.compornent.width, ColorPallet.BLACK, false, 6);
             }
         });

@@ -85,10 +85,10 @@ class Mark extends GameCompornent{
             else if(this.circle && !this.special){
                 this.destroy();
                 GameScene.catchCircle += 1;
-                //Score.I.score += 1;
                 if(GameScene.circleNumber == GameScene.catchCircle){
                     if(Bonus.bonusFlag){
                         Bonus.I.stopBonus();
+                        Bonus.bonusFlag =false;
                     }
                     //これがないと、大きな円で〇を消したとき、次のステージで生成された×や〇にhit判定が入ってしまう。
                     PushMark.I.compornent.scaleX = PushMark.I.compornent.scaleY = 0;
@@ -196,12 +196,11 @@ class Special extends Mark{
         if(!GameOver.gameOverFlag){
             if(!Bonus.bonusFlag){
                 new Bonus(0,0,0,0);
-
             }
 
         }
         Mark.mark.forEach(m => {
-            if(m.compornent && !m.circle){
+            if(m.compornent && !m.circle && Bonus.bonusFlag){
                 m.changeShape(this.compornent.width,ColorPallet.BLACK,false,6);
             }
 

@@ -34,7 +34,7 @@ var PushMark = (function (_super) {
         this.compornent.scaleX = this.compornent.scaleY = 0;
     };
     PushMark.prototype.push = function (x, y) {
-        this.compornent.scaleX = this.compornent.scaleY = 0.01;
+        this.compornent.scaleX = this.compornent.scaleY = 0.13;
         this.compornent.x = x;
         this.compornent.y = y;
     };
