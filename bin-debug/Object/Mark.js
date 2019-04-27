@@ -97,6 +97,9 @@ var Mark = (function (_super) {
                     if (GameScene.circleRate > 70) {
                         GameScene.circleRate -= 0.1;
                     }
+                    Mark.mark.forEach(function (m) {
+                        m.destroy();
+                    });
                     GameScene.create();
                 }
             }

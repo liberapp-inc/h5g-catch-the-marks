@@ -107,7 +107,10 @@ class Mark extends GameCompornent{
                     PushMark.I.compornent.x = PushMark.I.compornent.y = 0;
                     GameScene.stageLevel += 1;
                     if(Mark.moveSpeed < 10) {Mark.moveSpeed  += 0.1;}
-                    if(GameScene.circleRate > 70){GameScene.circleRate -=0.1;}                   
+                    if(GameScene.circleRate > 70){GameScene.circleRate -=0.1;}
+                    Mark.mark.forEach(m =>{
+                        m.destroy();
+                    });
                     GameScene.create();
                 }
             }

@@ -1,6 +1,6 @@
 class GameScene {
     static stageLevel:number = 1;
-    static circleRate : number = 80;
+    static circleRate : number = 60;
     static circleNumber : number = 0;//生成したcircle数
     static catchCircle : number = 0;//捕まえたcircle数
     static nowGenerate : boolean = false;//create中にisHitの判定が残っていることがあるのでその防止用
@@ -16,13 +16,15 @@ class GameScene {
         GameScene.catchCircle = 0;
 
 
-        let specialGenerate : number = Util.randomInt(0,100);
+/*        let specialGenerate : number = Util.randomInt(0,100);
         if(specialGenerate >= 45){
             new Special(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.RED);
         }
-
+*/
         for(let i = 0; i < GameScene.stageLevel + 10; i++){
             let probability :number = Util.randomInt(0,100);
+            Mark.circleGeneratePos[0] = Util.randomInt(Frame.I.compornent.x + 20, Frame.I.compornent.x + Frame.I.compornent.width - 20);
+            Mark.circleGeneratePos[1] = Util.randomInt(Frame.I.compornent.y + 20, Frame.I.compornent.y + Frame.I.compornent.height - 20);
             if(i == 0){
                 new Circle(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.BLACK);
                 GameScene.circleNumber += 1;

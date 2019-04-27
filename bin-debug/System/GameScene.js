@@ -10,12 +10,15 @@ var GameScene = (function () {
                 Mark.mark = newArray;*/
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
-        var specialGenerate = Util.randomInt(0, 100);
-        if (specialGenerate >= 45) {
-            new Special(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.RED);
-        }
+        /*        let specialGenerate : number = Util.randomInt(0,100);
+                if(specialGenerate >= 45){
+                    new Special(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.RED);
+                }
+        */
         for (var i = 0; i < GameScene.stageLevel + 10; i++) {
             var probability = Util.randomInt(0, 100);
+            Mark.circleGeneratePos[0] = Util.randomInt(Frame.I.compornent.x + 20, Frame.I.compornent.x + Frame.I.compornent.width - 20);
+            Mark.circleGeneratePos[1] = Util.randomInt(Frame.I.compornent.y + 20, Frame.I.compornent.y + Frame.I.compornent.height - 20);
             if (i == 0) {
                 new Circle(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.BLACK);
                 GameScene.circleNumber += 1;
@@ -46,7 +49,7 @@ var GameScene = (function () {
         GameScene.nowGenerate = false;
     };
     GameScene.stageLevel = 1;
-    GameScene.circleRate = 80;
+    GameScene.circleRate = 60;
     GameScene.circleNumber = 0; //生成したcircle数
     GameScene.catchCircle = 0; //捕まえたcircle数
     GameScene.nowGenerate = false; //create中にisHitの判定が残っていることがあるのでその防止用
