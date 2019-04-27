@@ -14,7 +14,6 @@ class Main extends eui.UILayer {
  
     private addToStage() {
 
-        SaveData.load();
         GameObject.init( this.stage );
         Util.init(this);
         Game.init();
@@ -79,37 +78,3 @@ class Background extends GameCompornent{
     updateContent() {}
 }
 
-class CreateWorld extends PhysicsObject{
-
-    static I : CreateWorld = null;
-
-    constructor() {
-        super();
-        CreateWorld.I = this;
-        CreateWorld.world.on("beginContact",  this.collision, this);
-
-    }
-    createWorld(){
-        CreateWorld.world = new p2.World();
-        CreateWorld.world.sleepMode = p2.World.BODY_SLEEPING;
-        CreateWorld.world.gravity = [0, 9.8];
-
-    }
-
-    static worldBegin(dt : number) :boolean{
-       
-        CreateWorld.world.step(1/60, dt/1000, 10);
-        return false;
-    }
-
-    //コリジョンイベントはここにまとめる
-    private collision(evt : any){
-
-    }
-
-    addDestroyMethod(){CreateWorld.world.clear();}
-
-    updateContent(){}
-
-
-}

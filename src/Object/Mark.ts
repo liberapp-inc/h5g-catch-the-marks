@@ -8,7 +8,6 @@ class Mark extends GameCompornent{
     static moveSpeed : number = 2;
     moveVector : number[] = [];
     circle : boolean = false;
-    special : boolean = false;
     static circleGeneratePos : number[];
     static crossGeneratePos  : number[];
     static circleRadius : number ;
@@ -18,7 +17,6 @@ class Mark extends GameCompornent{
         super(x,y,width,height);
         this.lineColor = lineColor;
         this.length = Math.sqrt(width**2 + height**2);
-        //this.setMoveVector(Mark.moveSpeed, 45);
         this.setMoveVector(Mark.moveSpeed, Util.randomInt(0, 359));
         Mark.mark.push(this);
         
@@ -79,13 +77,10 @@ class Mark extends GameCompornent{
 
     checkHit(){
         if(this.isHit){
-            if(this.special){
+            if(!this.circle){
                 this.destroy();
             }
-            else if(Bonus.bonusFlag && !this.circle){
-                this.destroy();
-            }
-            else if(!this.circle && !this.special){
+            else if(!this.circle){
                 if(!GameOver.gameOverFlag){
                     console.log("x" +this.compornent.x +"y" +this.compornent.y);
                     if(!GameScene.nowGenerate){
@@ -94,14 +89,10 @@ class Mark extends GameCompornent{
                     }
                 }
             }
-            else if(this.circle && !this.special){
+            else if(this.circle){
                 this.destroy();
                 GameScene.catchCircle += 1;
                 if(GameScene.circleNumber == GameScene.catchCircle){
-                    if(Bonus.bonusFlag){
-                        Bonus.I.stopBonus();
-                        Bonus.bonusFlag =false;
-                    }
                     //これがないと、大きな円で〇を消したとき、次のステージで生成された×や〇にhit判定が入ってしまう。
                     PushMark.I.compornent.scaleX = PushMark.I.compornent.scaleY = 0;
                     PushMark.I.compornent.x = PushMark.I.compornent.y = 0;
@@ -135,7 +126,7 @@ class Mark extends GameCompornent{
             }
             else{
                 //push中にバツにあたったらゲームオーバー
-                if(this.isHit && !this.circle && !Bonus.bonusFlag){
+                if(this.isHit && !this.circle){
                     if(!GameOver.gameOverFlag && !GameScene.nowGenerate){
                         UILayer.pushFlag = false;
                         PushMark.I.release();
@@ -169,47 +160,5 @@ class Cross extends Mark{
         this.setCrossShape(x,y,width,height,this.length,45,6,lineColor);
         
     }
-}
-
-class Special extends Mark{
-
-
-    constructor(x : number, y : number, width : number, height : number, lineColor:number){
-        super(x,y,width,height,lineColor);
-        this.lineColor = lineColor;
-        this.radius = width/2;
-        this.circle = true;
-        this.special = true;
-        this.setCircleShape(x,y,width/2);
-    }
-
-    setCircleShape(x : number, y : number, radius:number){
-        const shape:egret.Shape = new egret.Shape();
-        shape.graphics.lineStyle(6,this.lineColor);
-        shape.graphics.beginFill(this.lineColor);
-        shape.graphics.drawCircle(0, 0, radius);
-        shape.graphics.endFill();
-        this.compornent.addChild(shape);
-        GameStage.display.addChild(this.compornent);
-        this.shapes.push(shape);
-    }
-
-
-    addDestroyMethod(){
-        if(!GameOver.gameOverFlag){
-            if(!Bonus.bonusFlag){
-                new Bonus(0,0,0,0);
-            }
-
-        }
-        Mark.mark.forEach(m => {
-            if(m.compornent && !m.circle && Bonus.bonusFlag){
-                m.changeShape(this.compornent.width,ColorPallet.BLACK,false,6);
-            }
-
-        });
-        
-    }
-
 }
 

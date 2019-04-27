@@ -15,10 +15,8 @@ var Mark = (function (_super) {
         _this.isHit = false;
         _this.moveVector = [];
         _this.circle = false;
-        _this.special = false;
         _this.lineColor = lineColor;
         _this.length = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
-        //this.setMoveVector(Mark.moveSpeed, 45);
         _this.setMoveVector(Mark.moveSpeed, Util.randomInt(0, 359));
         Mark.mark.push(_this);
         return _this;
@@ -65,13 +63,10 @@ var Mark = (function (_super) {
     };
     Mark.prototype.checkHit = function () {
         if (this.isHit) {
-            if (this.special) {
+            if (!this.circle) {
                 this.destroy();
             }
-            else if (Bonus.bonusFlag && !this.circle) {
-                this.destroy();
-            }
-            else if (!this.circle && !this.special) {
+            else if (!this.circle) {
                 if (!GameOver.gameOverFlag) {
                     console.log("x" + this.compornent.x + "y" + this.compornent.y);
                     if (!GameScene.nowGenerate) {
@@ -79,14 +74,10 @@ var Mark = (function (_super) {
                     }
                 }
             }
-            else if (this.circle && !this.special) {
+            else if (this.circle) {
                 this.destroy();
                 GameScene.catchCircle += 1;
                 if (GameScene.circleNumber == GameScene.catchCircle) {
-                    if (Bonus.bonusFlag) {
-                        Bonus.I.stopBonus();
-                        Bonus.bonusFlag = false;
-                    }
                     //これがないと、大きな円で〇を消したとき、次のステージで生成された×や〇にhit判定が入ってしまう。
                     PushMark.I.compornent.scaleX = PushMark.I.compornent.scaleY = 0;
                     PushMark.I.compornent.x = PushMark.I.compornent.y = 0;
@@ -120,7 +111,7 @@ var Mark = (function (_super) {
             }
             else {
                 //push中にバツにあたったらゲームオーバー
-                if (this.isHit && !this.circle && !Bonus.bonusFlag) {
+                if (this.isHit && !this.circle) {
                     if (!GameOver.gameOverFlag && !GameScene.nowGenerate) {
                         UILayer.pushFlag = false;
                         PushMark.I.release();
@@ -160,41 +151,4 @@ var Cross = (function (_super) {
     return Cross;
 }(Mark));
 __reflect(Cross.prototype, "Cross");
-var Special = (function (_super) {
-    __extends(Special, _super);
-    function Special(x, y, width, height, lineColor) {
-        var _this = _super.call(this, x, y, width, height, lineColor) || this;
-        _this.lineColor = lineColor;
-        _this.radius = width / 2;
-        _this.circle = true;
-        _this.special = true;
-        _this.setCircleShape(x, y, width / 2);
-        return _this;
-    }
-    Special.prototype.setCircleShape = function (x, y, radius) {
-        var shape = new egret.Shape();
-        shape.graphics.lineStyle(6, this.lineColor);
-        shape.graphics.beginFill(this.lineColor);
-        shape.graphics.drawCircle(0, 0, radius);
-        shape.graphics.endFill();
-        this.compornent.addChild(shape);
-        GameStage.display.addChild(this.compornent);
-        this.shapes.push(shape);
-    };
-    Special.prototype.addDestroyMethod = function () {
-        var _this = this;
-        if (!GameOver.gameOverFlag) {
-            if (!Bonus.bonusFlag) {
-                new Bonus(0, 0, 0, 0);
-            }
-        }
-        Mark.mark.forEach(function (m) {
-            if (m.compornent && !m.circle && Bonus.bonusFlag) {
-                m.changeShape(_this.compornent.width, ColorPallet.BLACK, false, 6);
-            }
-        });
-    };
-    return Special;
-}(Mark));
-__reflect(Special.prototype, "Special");
 //# sourceMappingURL=Mark.js.map

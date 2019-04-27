@@ -6,15 +6,10 @@ var GameScene = (function () {
     }
     GameScene.create = function () {
         GameScene.nowGenerate = true;
-        /*        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
-                Mark.mark = newArray;*/
+        var newArray = Mark.mark.filter(function (obj) { return obj.destroyFlag !== true; });
+        Mark.mark = newArray;
         GameScene.circleNumber = 0;
         GameScene.catchCircle = 0;
-        /*        let specialGenerate : number = Util.randomInt(0,100);
-                if(specialGenerate >= 45){
-                    new Special(Mark.circleGeneratePos[0],Mark.circleGeneratePos[1],Mark.circleRadius,Mark.circleRadius, ColorPallet.RED);
-                }
-        */
         for (var i = 0; i < GameScene.stageLevel + 10; i++) {
             var probability = Util.randomInt(0, 100);
             Mark.circleGeneratePos[0] = Util.randomInt(Frame.I.compornent.x + 20, Frame.I.compornent.x + Frame.I.compornent.width - 20);
@@ -25,9 +20,6 @@ var GameScene = (function () {
             }
             else if (i == 1) {
                 var a = new Cross(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, ColorPallet.BLACK);
-                /*                if(Bonus.bonusFlag){
-                                    a.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
-                                }*/
             }
             else if (probability <= GameScene.circleRate) {
                 new Circle(Mark.circleGeneratePos[0], Mark.circleGeneratePos[1], Mark.circleRadius, Mark.circleRadius, ColorPallet.BLACK);
@@ -35,15 +27,11 @@ var GameScene = (function () {
             }
             else if (probability > GameScene.circleRate) {
                 var b = new Cross(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, ColorPallet.BLACK);
-                /*                if(Bonus.bonusFlag){
-                                    b.changeShape(Mark.circleRadius,ColorPallet.BLACK,false,6);
-                                }*/
             }
         }
         Mark.mark.forEach(function (m) {
-            if (!m.circle && !m.special) {
+            if (!m.circle) {
                 m.reverseShape(Mark.crossGeneratePos[0], Mark.crossGeneratePos[1], Mark.crossWidth, Mark.crossWidth, m.length, 45, 6, ColorPallet.BLACK);
-                //egret.Tween.removeTweens(m.compornent);
             }
         });
         GameScene.nowGenerate = false;

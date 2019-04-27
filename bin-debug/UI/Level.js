@@ -18,11 +18,11 @@ var Level = (function (_super) {
         _this.textBest = null;
         _this.textColor = 0x00FF3B;
         _this.textColor = color;
-        Score.I = _this;
+        Level.I = _this;
         _this.score = GameScene.stageLevel;
         _this.text = Util.myText(0, 0, "LEVEL : 0", 100, 0.5, _this.textColor, true);
         _this.compornent.addChild(_this.text);
-        _this.bestScore = Util.loadLocalStrage("Score.I.bestScore", Score.I.bestScore);
+        _this.bestScore = Util.loadLocalStrage("Level.I.bestScore", Level.I.bestScore);
         _this.textBest = Util.myText(0, 50, "BEST : " + _this.bestScore.toString(), 100, 0.5, _this.textColor, true);
         _this.compornent.addChild(_this.textBest);
         return _this;
@@ -38,7 +38,7 @@ var Level = (function (_super) {
         if (this.bestScore < GameScene.stageLevel) {
             this.bestScore = GameScene.stageLevel;
             this.textBest.text = "BEST : " + this.bestScore.toFixed();
-            Util.saveLocalStrage("Score.I.bestScore", GameScene.stageLevel);
+            Util.saveLocalStrage("Level.I.bestScore", GameScene.stageLevel);
         }
     };
     Level.prototype.addScore = function () {

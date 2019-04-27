@@ -24,9 +24,6 @@ var GameOver = (function (_super) {
         _this.textScore.anchorOffsetX = _this.textScore.width / 2;
         _this.textScore.anchorOffsetY = _this.textScore.height / 2;
         _this.compornent.addChild(_this.textScore);
-        /*        if( Score.I.score >= Score.I.bestScore ){
-                    Util.saveLocalStrage("bestScore",Score.I.score);
-                }*/
         UILayer.display.once(egret.TouchEvent.TOUCH_BEGIN, function (e) { return _this.tap(e); }, _this);
         return _this;
     }

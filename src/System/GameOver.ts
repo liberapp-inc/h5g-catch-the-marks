@@ -19,9 +19,6 @@ class GameOver extends UICompornent{
         this.textScore.anchorOffsetY = this.textScore.height/2;
         this.compornent.addChild( this.textScore );
 
-/*        if( Score.I.score >= Score.I.bestScore ){
-            Util.saveLocalStrage("bestScore",Score.I.score);
-        }*/
         UILayer.display.once(egret.TouchEvent.TOUCH_BEGIN, (e: egret.TouchEvent) => this.tap(e), this);
     }
 

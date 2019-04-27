@@ -46,8 +46,6 @@ var PushMark = (function (_super) {
         this.expansion = true;
         this.compornent.scaleX = this.compornent.scaleY = 0;
         this.compornent.x = this.compornent.y = 0;
-        /*        const newArray : Mark[] = Mark.mark.filter(obj => obj.destroyFlag !== true);
-                Mark.mark = newArray;*/
     };
     PushMark.prototype.switchExpansion = function () {
         if (UILayer.pushFlag) {

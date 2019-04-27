@@ -23,7 +23,6 @@ var Main = (function (_super) {
         return _this;
     }
     Main.prototype.addToStage = function () {
-        SaveData.load();
         GameObject.init(this.stage);
         Util.init(this);
         Game.init();
@@ -80,30 +79,4 @@ var Background = (function (_super) {
     return Background;
 }(GameCompornent));
 __reflect(Background.prototype, "Background");
-var CreateWorld = (function (_super) {
-    __extends(CreateWorld, _super);
-    function CreateWorld() {
-        var _this = _super.call(this) || this;
-        CreateWorld.I = _this;
-        CreateWorld.world.on("beginContact", _this.collision, _this);
-        return _this;
-    }
-    CreateWorld.prototype.createWorld = function () {
-        CreateWorld.world = new p2.World();
-        CreateWorld.world.sleepMode = p2.World.BODY_SLEEPING;
-        CreateWorld.world.gravity = [0, 9.8];
-    };
-    CreateWorld.worldBegin = function (dt) {
-        CreateWorld.world.step(1 / 60, dt / 1000, 10);
-        return false;
-    };
-    //コリジョンイベントはここにまとめる
-    CreateWorld.prototype.collision = function (evt) {
-    };
-    CreateWorld.prototype.addDestroyMethod = function () { CreateWorld.world.clear(); };
-    CreateWorld.prototype.updateContent = function () { };
-    CreateWorld.I = null;
-    return CreateWorld;
-}(PhysicsObject));
-__reflect(CreateWorld.prototype, "CreateWorld");
 //# sourceMappingURL=Main.js.map

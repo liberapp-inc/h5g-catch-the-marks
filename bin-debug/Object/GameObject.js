@@ -70,21 +70,6 @@ var GameObject = (function () {
     return GameObject;
 }());
 __reflect(GameObject.prototype, "GameObject");
-var PhysicsObject = (function (_super) {
-    __extends(PhysicsObject, _super);
-    function PhysicsObject() {
-        var _this = _super.call(this) || this;
-        _this.body = null;
-        _this.bodyShape = null;
-        return _this;
-    }
-    PhysicsObject.prototype.addDestroyMethod = function () {
-        CreateWorld.world.removeBody(this.body);
-    };
-    PhysicsObject.world = null;
-    return PhysicsObject;
-}(GameObject));
-__reflect(PhysicsObject.prototype, "PhysicsObject");
 //GameStageに描画する用のコンポーネント
 var GameCompornent = (function (_super) {
     __extends(GameCompornent, _super);
